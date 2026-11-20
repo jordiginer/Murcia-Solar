@@ -9,7 +9,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#0d1c27" />
+    <meta name="theme-color" content="#f9f8f2" />
     <meta name="description" content={description} />
     <meta name="robots" content="noindex, nofollow" />
     <link rel="icon" href={`${base}/imagenes/marca.webp`} />
@@ -20,19 +20,3 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <slot />
   </body>
 </html>
-
-<script>
-  if ('IntersectionObserver' in window && matchMedia('(prefers-reduced-motion: no-preference)').matches) {
-    const observer = new IntersectionObserver((entries) => {
-      for (const { target, isIntersecting } of entries) {
-        if (!isIntersecting) continue;
-        target.classList.add('reveal-in');
-        observer.unobserve(target);
-      }
-    }, { threshold: 0.16 });
-
-    for (const section of document.querySelectorAll('[data-reveal]')) {
-      observer.observe(section);
-    }
-  }
-</script>
