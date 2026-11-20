@@ -1,4 +1,5 @@
 ---
+import Brand from '../components/Brand.astro';
 import Site from '../layouts/Site.astro';
 import Contact from '../components/Contact.astro';
 import Solutions from '../components/Solutions.astro';
@@ -42,56 +43,53 @@ const services = [
 ---
 
 <Site title="Murcia Solar · Placas solares, recarga y electricidad en Murcia" description="Instalaciones solares para viviendas, comunidades y empresas. Cargadores Tesla y V2C, aerotermia y servicios eléctricos en la Región de Murcia.">
-  <header class="header">
-    <div class="wrap header-inner flex items-center justify-between">
-      <a href="#inicio" class="brand inline-flex items-center">
-        <img src={photo('marca')} alt="Murcia Solar" width="83" height="45" />
-      </a>
-      <nav class="flex" aria-label="Principal">
-        <a href="#soluciones">Soluciones</a>
-        <a href="#instalaciones">Instalaciones</a>
-        <a href="#proceso">El proceso</a>
+  <header class="header" id="inicio">
+    <div class="wrap header-inner">
+      <Brand />
+      <nav aria-label="Principal">
+        <a href="#soluciones">Soluciones</a><a href="#instalaciones">Instalaciones</a><a href="#proceso">Cómo trabajamos</a>
       </nav>
-      <a class="button header-action" href="#contacto">Pedir presupuesto</a>
+      <a class="button header-action" href="#contacto">Pedir presupuesto <span aria-hidden="true">↗</span></a>
     </div>
   </header>
-
   <main id="contenido">
-    <section class="hero" id="inicio" aria-labelledby="principal">
-      <img class="hero-backdrop" src={photo('cubierta')} alt="Paneles fotovoltaicos instalados por Murcia Solar sobre una cubierta de teja" width="1350" height="1013" fetchpriority="high" />
-      <div class="wrap hero-inner">
-        <div class="hero-copy">
-          <p class="kicker"><span></span> Instaladores en la Región de Murcia</p>
-          <h1 id="principal">El sol de Murcia.<br /><em>Tu propia energía.</em></h1>
-          <p>Placas solares, recarga eléctrica y aerotermia, con un equipo local que estudia el proyecto, instala los equipos y se ocupa del mantenimiento.</p>
-          <a class="button primary" href="#soluciones">Encuentra tu solución</a>
+    <section class="hero wrap" aria-labelledby="principal">
+      <div class="hero-copy">
+        <p class="kicker"><span></span> Energía solar en Murcia</p>
+        <h1 id="principal">Tu tejado.<br/><em>Tu energía.</em></h1>
+        <p class="intro">Convierte el sol de Murcia en electricidad para tu casa o tu negocio. Nuestro equipo se encarga del estudio, la instalación y los trámites.</p>
+        <div class="hero-actions"><a class="button dark" href="#contacto">Solicitar estudio gratuito <span aria-hidden="true">↗</span></a><a class="quiet" href="#instalaciones">Ver instalaciones</a></div>
+      </div>
+      <figure class="hero-figure" aria-label="Fotografías de nuestras instalaciones">
+        <img id="featured-photo" src={photo('cubierta')} width="1350" height="1013" fetchpriority="high" alt="Detalle de un panel solar sobre una cubierta de teja en Murcia" />
+        <div class="photo-bar">
+          <figcaption id="featured-caption" aria-live="polite"><small>Instalación residencial</small><strong>Fotovoltaica sobre teja</strong></figcaption>
+          <div class="gallery-controls" hidden>
+            <button type="button" aria-label="Fotografía anterior" data-step="-1">‹</button>
+            <button type="button" aria-label="Fotografía siguiente" data-step="1">›</button>
+          </div>
         </div>
-        <p class="hero-caption">Instalación residencial de Murcia Solar</p>
-      </div>
+      </figure>
     </section>
-
-    <div class="credentials">
-      <div class="wrap proof">
-        <div><strong>+10 años</strong><span>de experiencia</span></div>
-        <div><strong>+45 municipios</strong><span>atendidos en la Región de Murcia</span></div>
-        <div><strong>Instaladores certificados</strong><span><a href="https://murciasolar.es/instalador-certificado-tesla-energy/">Tesla Energy</a> y <a href="https://murciasolar.es/instalador-certificado-v2c/">V2C</a></span></div>
-      </div>
-    </div>
-
+    <div class="credentials"><div class="wrap proof">
+      <div><strong>+10 <i>años</i></strong><span>de experiencia en instalaciones</span></div>
+      <div><strong>Región de Murcia</strong><span>Servicio para hogares y empresas</span></div>
+      <div><strong>Tesla <i>&amp;</i> V2C</strong><span>Instaladores certificados</span></div>
+    </div></div>
     <Solutions services={services} />
 
     <section class="works" id="instalaciones" aria-labelledby="trabajos-titulo">
       <div class="wrap section-space">
-        <div class="section-head" data-reveal>
-          <div><p class="kicker"><span></span> Instalaciones de Murcia Solar</p><h2 id="trabajos-titulo">Dos cubiertas.<br />Dos formas de usar el sol.</h2></div>
-          <p>Una vivienda y una nave tienen horarios y consumos distintos. El estudio parte de cómo se usa la energía en cada espacio.</p>
+        <div class="section-head">
+          <div><p class="kicker"><span></span> Instalaciones de Murcia Solar</p><h2 id="trabajos-titulo">El sol, sobre el terreno.</h2></div>
+          <p>Paneles en cubiertas industriales y azoteas residenciales. Cada proyecto aprovecha el espacio y la orientación disponibles.</p>
         </div>
         <div class="portfolio grid">
-          <figure class="portfolio-main" data-reveal>
+          <figure class="portfolio-main">
             <div class="photo-frame"><img src={photo('panorama')} width="1400" height="1050" loading="lazy" alt="Vista de los paneles sobre una cubierta industrial" /></div>
             <figcaption><strong>Cubierta industrial</strong><span>Autoconsumo para empresas</span></figcaption>
           </figure>
-          <figure class="portfolio-side" data-reveal>
+          <figure class="portfolio-side">
             <div class="photo-frame"><img src={photo('azotea')} width="1000" height="750" loading="lazy" alt="Paneles solares instalados en una azotea con estructura inclinada" /></div>
             <figcaption><strong>Instalación en azotea</strong><span>Autoconsumo residencial</span></figcaption>
           </figure>
@@ -100,11 +98,11 @@ const services = [
     </section>
 
     <section class="wrap section-space process" id="proceso" aria-labelledby="proceso-titulo">
-      <figure class="process-photo" data-reveal>
+      <figure class="process-photo">
         <div class="photo-frame"><img src={photo('montaje')} width="850" height="825" loading="lazy" alt="Técnico de Murcia Solar montando los soportes de una instalación solar" /></div>
         <figcaption>Montaje de la estructura fotovoltaica</figcaption>
       </figure>
-      <div data-reveal>
+      <div>
         <p class="kicker"><span></span> Cómo trabajamos</p>
         <h2 id="proceso-titulo">Del estudio a la puesta en marcha.</h2>
         <ol class="steps">
@@ -122,9 +120,33 @@ const services = [
 
   <footer class="footer">
     <div class="wrap footer-inner flex flex-wrap items-start justify-between">
-      <a href="#inicio" class="brand inline-flex items-center"><img src={photo('marca')} alt="Murcia Solar" width="83" height="45" /></a>
+      <Brand />
       <address>Murcia Solar Servicios Eléctricos SLU<br />C. de la Manga, 11 · 30005 Murcia</address>
       <a class="text-link" href="https://murciasolar.es/politica-privacidad/">Privacidad</a>
     </div>
   </footer>
 </Site>
+
+<script>
+  const photo = document.querySelector<HTMLImageElement>('#featured-photo')!;
+  const caption = document.querySelector<HTMLElement>('#featured-caption')!;
+  const controls = document.querySelector<HTMLElement>('.gallery-controls')!;
+  const slides = [
+    ['cubierta', 'Detalle de un panel solar sobre una cubierta de teja en Murcia', 'Instalación residencial', 'Fotovoltaica sobre teja'],
+    ['panorama', 'Paneles fotovoltaicos sobre una nave', 'Instalación industrial', 'Autoconsumo en cubierta'],
+    ['azotea', 'Paneles inclinados sobre una azotea', 'Instalación residencial', 'Paneles en azotea'],
+  ];
+  const directory = new URL('.', photo.src);
+  let current = 0;
+  controls.hidden = false;
+  controls.querySelectorAll<HTMLButtonElement>('button').forEach(button => {
+    button.addEventListener('click', () => {
+      current = (current + Number(button.dataset.step) + slides.length) % slides.length;
+      const [file, alt, category, title] = slides[current];
+      photo.src = new URL(file + '.webp', directory).href;
+      photo.alt = alt;
+      caption.querySelector('small')!.textContent = category;
+      caption.querySelector('strong')!.textContent = title;
+    });
+  });
+</script>
