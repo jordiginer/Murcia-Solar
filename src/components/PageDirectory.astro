@@ -1,0 +1,12 @@
+---
+const groups = [
+  { title: 'Especialidades', pages: ['Energía solar', 'Cargadores eléctricos', 'Climatización', 'Electricidad', 'Mantenimiento'] },
+  { title: 'Planifica tu instalación', pages: ['Precios', 'Subvenciones', 'Calculadora solar', 'Preguntas frecuentes'] },
+  { title: 'Murcia Solar', pages: ['La empresa', 'Cobertura', 'Blog solar', 'Opiniones', 'Contacto'] },
+];
+---
+<div class="page-directory">
+  {groups.map(group => <div><strong>{group.title}</strong>{group.pages.map(page =>
+    <button type="button" data-upcoming={page} aria-haspopup="dialog">{page}</button>
+  )}</div>)}
+</div>
