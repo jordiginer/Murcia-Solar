@@ -1,146 +1,130 @@
 ---
 import Site from '../layouts/Site.astro';
 import Contact from '../components/Contact.astro';
+import Solutions from '../components/Solutions.astro';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const photo = (name: string) => `${base}/imagenes/${name}.webp`;
 const services = [
   {
     name: 'Placas solares',
-    text: 'Instalamos sistemas de autoconsumo para viviendas, comunidades y empresas. Estudiamos tu consumo y la cubierta antes de dimensionar los paneles.',
-    details: ['Estudio técnico gratuito', 'Baterías e inversores híbridos', 'Gestión de legalización y ayudas aplicables'],
-    url: 'https://murciasolar.es/instalacion-de-paneles-solares-en-murcia/',
+    need: 'Producir mi electricidad',
+    title: 'Autoconsumo solar',
+    text: 'Estudiamos cuánto consumes y cómo es tu cubierta para dimensionar los paneles. Si puedes aprovechar la energía más tarde, también valoramos una batería.',
+    points: ['Viviendas, comunidades, comercios y naves', 'Estudio técnico gratuito', 'Legalización y gestión de ayudas aplicables'],
+    link: 'https://murciasolar.es/instalacion-de-paneles-solares-en-murcia/',
   },
   {
-    name: 'Cargadores eléctricos',
-    text: 'Instalamos Tesla Wall Connector y V2C Trydan. Si ya tienes placas, podemos integrar la recarga con tu instalación solar.',
-    details: ['Puntos de carga para garajes y empresas', 'Instalación y boletín eléctrico'],
-  },
-  {
-    name: 'Electricidad',
-    title: 'Electricista 24 h',
-    text: 'Realizamos instalaciones nuevas, cambios de cuadro y boletines eléctricos. Atendemos urgencias también en festivos y fines de semana.',
-    details: ['Instalaciones y reformas eléctricas', 'Urgencias en la Región de Murcia'],
+    name: 'Cargador eléctrico',
+    need: 'Cargar mi coche',
+    title: 'Recarga en tu garaje',
+    text: 'Instalamos puntos Tesla Wall Connector y V2C Trydan. Podemos integrar la recarga con tu instalación fotovoltaica.',
+    points: ['Garajes particulares y empresas', 'Revisión de potencia y cuadro eléctrico', 'Instalación y boletín eléctrico'],
+    link: 'https://murciasolar.es/instalador-de-cargador-de-coche-electrico-en-murcia/',
   },
   {
     name: 'Aerotermia',
-    text: 'Calefacción, refrigeración y agua caliente adaptadas al uso de tu vivienda.',
-    details: [],
+    need: 'Climatizar mi vivienda',
+    title: 'Climatización con aerotermia',
+    text: 'Dimensionamos el equipo según tu vivienda y el uso que le das durante el año.',
+    points: ['Calefacción, refrigeración y agua caliente', 'Sustitución de calderas', 'Integración con sistemas compatibles'],
+    link: 'https://murciasolar.es/instalacion-aerotermia-murcia/',
+  },
+  {
+    name: 'Electricidad',
+    need: 'Revisar mi instalación',
+    title: 'Electricistas en Murcia',
+    text: 'Hacemos instalaciones nuevas, renovamos cuadros y emitimos boletines. También atendemos averías urgentes en noches y festivos.',
+    points: ['Viviendas, locales y naves', 'Cuadros, circuitos y boletines', 'Atención de urgencias 24 h'],
+    link: 'https://murciasolar.es/electricista-murcia/',
   },
 ];
-const [solar, charging, electrical, heating] = services;
 ---
 
-<Site title="Placas solares, cargadores y electricista en Murcia | Murcia Solar" description="Instalaciones de autoconsumo, cargadores Tesla y V2C y servicios eléctricos en la Región de Murcia. Pide un estudio técnico y presupuesto gratuito.">
+<Site title="Murcia Solar · Placas solares, recarga y electricidad en Murcia" description="Instalaciones solares para viviendas, comunidades y empresas. Cargadores Tesla y V2C, aerotermia y servicios eléctricos en la Región de Murcia.">
   <header class="header">
     <div class="wrap header-inner flex items-center justify-between">
-      <a href="#inicio" class="brand inline-flex items-center"><img src={photo('marca')} alt="Murcia Solar" width="83" height="45" /></a>
+      <a href="#inicio" class="brand inline-flex items-center">
+        <img src={photo('marca')} alt="Murcia Solar" width="83" height="45" />
+      </a>
       <nav class="flex" aria-label="Principal">
-        <a href="#servicios">Servicios</a>
-        <a href="#trabajos">Instalaciones</a>
-        <a href="#proceso">Cómo trabajamos</a>
+        <a href="#soluciones">Soluciones</a>
+        <a href="#instalaciones">Instalaciones</a>
+        <a href="#proceso">El proceso</a>
       </nav>
       <a class="button header-action" href="#contacto">Pedir presupuesto</a>
     </div>
   </header>
 
   <main id="contenido">
-    <section class="hero wrap" id="inicio" aria-labelledby="principal">
-      <div class="hero-top">
+    <section class="hero" id="inicio" aria-labelledby="principal">
+      <img class="hero-backdrop" src={photo('cubierta')} alt="Paneles fotovoltaicos instalados por Murcia Solar sobre una cubierta de teja" width="1350" height="1013" fetchpriority="high" />
+      <div class="wrap hero-inner">
         <div class="hero-copy">
-          <p class="kicker">Autoconsumo en la Región de Murcia</p>
-          <h1 id="principal">Placas solares <span>en Murcia.</span></h1>
-          <p class="hero-lead">Diseñamos e instalamos sistemas solares para viviendas, comunidades y empresas. También instalamos puntos de recarga y hacemos trabajos eléctricos.</p>
-          <div class="hero-actions flex flex-wrap items-center">
-            <a class="button primary" href="#contacto" data-service={solar.name}>Pide tu presupuesto gratuito</a>
-            <a class="text-link" href="tel:+34635570836">635 570 836</a>
-          </div>
+          <p class="kicker"><span></span> Instaladores en la Región de Murcia</p>
+          <h1 id="principal">El sol de Murcia.<br /><em>Tu propia energía.</em></h1>
+          <p>Placas solares, recarga eléctrica y aerotermia, con un equipo local que estudia el proyecto, instala los equipos y se ocupa del mantenimiento.</p>
+          <a class="button primary" href="#soluciones">Encuentra tu solución</a>
         </div>
-        <figure class="hero-image relative">
-          <div class="photo-frame">
-            <img src={photo('cubierta')} alt="Paneles solares de Murcia Solar sobre una cubierta de teja" width="1350" height="1013" fetchpriority="high" />
-          </div>
-          <figcaption>Instalación residencial de Murcia Solar</figcaption>
-        </figure>
-      </div>
-      <div class="proof" aria-label="Experiencia, cobertura y certificaciones">
-        <div><strong>Más de 10 años</strong><span>de experiencia en el sector</span></div>
-        <div><strong>Más de 45 municipios</strong><span>atendidos en la Región de Murcia</span></div>
-        <div><strong>Tesla Energy y V2C</strong><span><a href="https://murciasolar.es/instalador-certificado-tesla-energy/">Certificado Tesla</a> · <a href="https://murciasolar.es/instalador-certificado-v2c/">Certificado V2C</a></span></div>
+        <p class="hero-caption">Instalación residencial de Murcia Solar</p>
       </div>
     </section>
 
-    <section class="dark-section" id="servicios" aria-labelledby="servicios-titulo">
+    <div class="credentials">
+      <div class="wrap proof">
+        <div><strong>+10 años</strong><span>de experiencia</span></div>
+        <div><strong>+45 municipios</strong><span>atendidos en la Región de Murcia</span></div>
+        <div><strong>Instaladores certificados</strong><span><a href="https://murciasolar.es/instalador-certificado-tesla-energy/">Tesla Energy</a> y <a href="https://murciasolar.es/instalador-certificado-v2c/">V2C</a></span></div>
+      </div>
+    </div>
+
+    <Solutions services={services} />
+
+    <section class="works" id="instalaciones" aria-labelledby="trabajos-titulo">
       <div class="wrap section-space">
-        <div class="section-heading" data-reveal>
-          <p class="kicker">Servicios</p>
-          <h2 id="servicios-titulo">Solar, recarga<br />y electricidad.</h2>
+        <div class="section-head" data-reveal>
+          <div><p class="kicker"><span></span> Instalaciones de Murcia Solar</p><h2 id="trabajos-titulo">Dos cubiertas.<br />Dos formas de usar el sol.</h2></div>
+          <p>Una vivienda y una nave tienen horarios y consumos distintos. El estudio parte de cómo se usa la energía en cada espacio.</p>
         </div>
-        <div class="service-grid grid">
-          <article class="service-feature" data-reveal>
-            <div class="photo-frame">
-              <img src={photo('azotea')} width="1000" height="750" loading="lazy" alt="Paneles fotovoltaicos sobre una azotea" />
-            </div>
-            <div class="service-content">
-              <h3>{solar.name}</h3>
-              <p>{solar.text}</p>
-              <ul>{solar.details.map((detail) => <li>{detail}</li>)}</ul>
-              <a class="text-link" href={solar.url}>Ver instalaciones solares</a>
-            </div>
-          </article>
-          <div class="service-stack">
-            {[charging, electrical].map((service) => (
-              <article class="service-content" data-reveal>
-                <h3>{service.title ?? service.name}</h3>
-                <p>{service.text}</p>
-                <ul>{service.details.map((detail) => <li>{detail}</li>)}</ul>
-                {service === electrical
-                  ? <a class="text-link" href="tel:+34635570836">Llamar al electricista</a>
-                  : <a class="text-link" href="#contacto" data-service={service.name}>Consultar un punto de recarga</a>}
-              </article>
-            ))}
-          </div>
-        </div>
-        <div class="heating flex flex-wrap items-baseline justify-between">
-          <div><h3>{heating.name}</h3><p>{heating.text}</p></div>
-          <a class="text-link" href="#contacto" data-service={heating.name}>Consultar aerotermia</a>
+        <div class="portfolio grid">
+          <figure class="portfolio-main" data-reveal>
+            <div class="photo-frame"><img src={photo('panorama')} width="1400" height="1050" loading="lazy" alt="Vista de los paneles sobre una cubierta industrial" /></div>
+            <figcaption><strong>Cubierta industrial</strong><span>Autoconsumo para empresas</span></figcaption>
+          </figure>
+          <figure class="portfolio-side" data-reveal>
+            <div class="photo-frame"><img src={photo('azotea')} width="1000" height="750" loading="lazy" alt="Paneles solares instalados en una azotea con estructura inclinada" /></div>
+            <figcaption><strong>Instalación en azotea</strong><span>Autoconsumo residencial</span></figcaption>
+          </figure>
         </div>
       </div>
     </section>
 
-    <section class="work wrap section-space" id="trabajos" aria-labelledby="trabajos-titulo">
-      <div class="work-head" data-reveal>
-        <div><p class="kicker">Instalaciones de Murcia Solar</p><h2 id="trabajos-titulo">Autoconsumo<br />para empresas.</h2></div>
-        <p>Estudiamos el consumo de tu actividad y la superficie disponible para aprovechar la cubierta de tu nave.</p>
-      </div>
-      <figure class="work-photo">
-        <div class="photo-frame"><img src={photo('panorama')} width="1400" height="1050" loading="lazy" alt="Vista panorámica de paneles solares en una cubierta industrial en Murcia" /></div>
-        <figcaption>Instalación fotovoltaica en cubierta industrial</figcaption>
+    <section class="wrap section-space process" id="proceso" aria-labelledby="proceso-titulo">
+      <figure class="process-photo" data-reveal>
+        <div class="photo-frame"><img src={photo('montaje')} width="850" height="825" loading="lazy" alt="Técnico de Murcia Solar montando los soportes de una instalación solar" /></div>
+        <figcaption>Montaje de la estructura fotovoltaica</figcaption>
       </figure>
-    </section>
-
-    <section class="method" id="proceso" aria-labelledby="proceso-titulo">
-      <div class="wrap section-space method-inner">
-        <div class="photo-frame"><img src={photo('montaje')} width="850" height="825" loading="lazy" alt="Un técnico monta los soportes para los paneles fotovoltaicos" /></div>
-        <div data-reveal>
-          <p class="kicker">Cómo trabajamos</p>
-          <h2 id="proceso-titulo">Del estudio al mantenimiento.</h2>
-          <ol class="steps">
-            <li><strong>Nos cuentas qué necesitas.</strong> Revisamos tu caso por teléfono o WhatsApp.</li>
-            <li><strong>Hacemos el estudio técnico.</strong> Revisamos consumo, cubierta o cuadro eléctrico y preparamos el presupuesto.</li>
-            <li><strong>Instalamos y gestionamos los trámites.</strong> Nos ocupamos de la legalización y de las ayudas que correspondan.</li>
-            <li><strong>Seguimos después del montaje.</strong> Ofrecemos monitorización, mantenimiento y asistencia técnica.</li>
-          </ol>
-          <a class="text-link" href="https://murciasolar.es/testimonios-clientes-murcia-solar/">Leer opiniones sobre Murcia Solar</a>
-        </div>
+      <div data-reveal>
+        <p class="kicker"><span></span> Cómo trabajamos</p>
+        <h2 id="proceso-titulo">Del estudio a la puesta en marcha.</h2>
+        <ol class="steps">
+          <li><strong>Entendemos tu caso</strong><span>Empezamos por saber qué quieres resolver y dónde.</span></li>
+          <li><strong>Medimos y presupuestamos</strong><span>Revisamos el consumo, la cubierta o el cuadro eléctrico.</span></li>
+          <li><strong>Instalamos y legalizamos</strong><span>Montamos los equipos y gestionamos los trámites que correspondan.</span></li>
+          <li><strong>Seguimos disponibles</strong><span>Ofrecemos monitorización, mantenimiento y asistencia.</span></li>
+        </ol>
+        <a class="text-link" href="https://murciasolar.es/testimonios-clientes-murcia-solar/">Leer opiniones sobre el equipo</a>
       </div>
     </section>
+
     <Contact services={services} />
   </main>
 
-  <footer class="wrap footer flex flex-wrap items-start justify-between">
-    <a href="#inicio" class="brand inline-flex items-center"><img src={photo('marca')} alt="Murcia Solar" width="83" height="45" /></a>
-    <address>Murcia Solar Servicios Eléctricos SLU<br />C. de la Manga, 11 · 30005 Murcia</address>
-    <a class="text-link" href="https://murciasolar.es/politica-privacidad/">Privacidad</a>
+  <footer class="footer">
+    <div class="wrap footer-inner flex flex-wrap items-start justify-between">
+      <a href="#inicio" class="brand inline-flex items-center"><img src={photo('marca')} alt="Murcia Solar" width="83" height="45" /></a>
+      <address>Murcia Solar Servicios Eléctricos SLU<br />C. de la Manga, 11 · 30005 Murcia</address>
+      <a class="text-link" href="https://murciasolar.es/politica-privacidad/">Privacidad</a>
+    </div>
   </footer>
 </Site>
