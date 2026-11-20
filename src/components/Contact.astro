@@ -1,0 +1,79 @@
+---
+const { services } = Astro.props;
+---
+<section class="contact" id="contacto">
+  <div class="wrap contact-inner">
+    <div class="contact-copy">
+      <p class="kicker">Presupuesto sin compromiso</p>
+      <h2>Hablemos de<br />tu instalación.</h2>
+      <p>Dinos en qué municipio estás y qué necesitas. Si tienes una factura a mano, puedes indicar el consumo aproximado.</p>
+      <a class="phone" href="tel:+34635570836">635 570 836</a>
+      <a class="text-link" href="https://wa.me/34635570836">Escribir directamente por WhatsApp</a>
+    </div>
+    <form id="consulta" hidden>
+      <h3>Prepara tu mensaje</h3>
+      <p id="form-help">Revisarás el borrador en WhatsApp antes de enviarlo.</p>
+      <div class="fields">
+        <label>Nombre <input name="nombre" required maxlength="80" autocomplete="given-name" /></label>
+        <label>Municipio <input name="municipio" required maxlength="80" autocomplete="address-level2" /></label>
+      </div>
+      <label>Servicio
+        <select id="servicio" name="servicio" required>
+          <option value="">Selecciona un servicio</option>
+          {services.map(({ name }: { name: string }) => <option>{name}</option>)}
+          <option>Mantenimiento</option>
+        </select>
+      </label>
+      <label>Cuéntanos un poco más <textarea name="detalles" rows="3" maxlength="400" placeholder="Opcional"></textarea></label>
+      <button class="button dark" type="submit" aria-describedby="form-help">Preparar consulta</button>
+      <p id="estado" role="status" tabindex="-1" hidden>Mensaje preparado. Puedes revisarlo en WhatsApp.</p>
+      <a id="borrador" class="text-link" href="https://wa.me/34635570836" hidden>Revisar mensaje en WhatsApp</a>
+    </form>
+  </div>
+</section>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('#consulta')!;
+  const service = document.querySelector<HTMLSelectElement>('#servicio')!;
+  const status = document.querySelector<HTMLParagraphElement>('#estado')!;
+  const draft = document.querySelector<HTMLAnchorElement>('#borrador')!;
+  const resetDraft = () => {
+    status.hidden = true;
+    draft.hidden = true;
+    draft.href = 'https://wa.me/34635570836';
+  };
+
+  form.hidden = false;
+  for (const link of document.querySelectorAll<HTMLAnchorElement>('[data-service]')) {
+    link.addEventListener('click', () => {
+      service.value = link.dataset.service ?? '';
+      resetDraft();
+    });
+  }
+  form.addEventListener('input', ({ target }) => {
+    if (target instanceof HTMLInputElement) target.setCustomValidity('');
+    resetDraft();
+  });
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const fields = new FormData(form);
+    const name = String(fields.get('nombre')).trim();
+    const town = String(fields.get('municipio')).trim();
+    if (!name || !town) {
+      const field = form.elements.namedItem(name ? 'municipio' : 'nombre') as HTMLInputElement;
+      field.setCustomValidity('Completa este campo.');
+      field.reportValidity();
+      return;
+    }
+
+    const message = [
+      `Hola, soy ${name}, de ${town}.`,
+      `Me gustaría consultar sobre ${service.value.toLowerCase()}.`,
+      String(fields.get('detalles')).trim(),
+    ].filter(Boolean).join('\n');
+    draft.href = `https://wa.me/34635570836?text=${encodeURIComponent(message)}`;
+    draft.hidden = false;
+    status.hidden = false;
+    status.focus();
+  });
+</script>

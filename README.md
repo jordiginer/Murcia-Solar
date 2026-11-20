@@ -1,7 +1,17 @@
 # Murcia Solar
 
-Propuesta web estática para Murcia Solar. Para abrirla, carga `index.html` en el navegador. También se puede servir el directorio raíz desde cualquier alojamiento estático. No requiere instalación ni compilación.
+Landing estática hecha con Astro y Tailwind CSS. Requiere Node.js 22.12 o superior.
 
-Los botones de cada servicio preseleccionan el campo correspondiente en el formulario. El formulario valida los campos y prepara un borrador para WhatsApp. El visitante revisa y envía el mensaje desde WhatsApp.
+```bash
+npm ci
+npm run dev
+npm run build
+npm run preview
+```
 
-Las fotografías proceden de la galería de Murcia Solar. La página incorpora `noindex` mientras se utiliza como propuesta.
+El build genera el sitio en `dist/`. Las fotografías proceden del sitio de Murcia Solar. El formulario prepara un borrador para WhatsApp sin un servidor de formularios. La propuesta incluye `noindex`.
+
+## Referencias de diseño
+
+- [Svea Solar, Justified Studio](https://www.justified.studio/work/svea-solar): una identidad visual reconocible aplicada a toda la experiencia.
+- [Otovo España](https://www.otovo.es/): texto directo, fotografías del trabajo y acciones concretas para cada servicio.
