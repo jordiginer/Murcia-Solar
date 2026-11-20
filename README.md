@@ -1,5 +1,7 @@
 # Murcia Solar
 
+![Portada en escritorio y móvil](docs/vista-portada.webp)
+
 Landing estática hecha con Astro y Tailwind CSS. Requiere Node.js 22.12 o superior.
 
 ```bash

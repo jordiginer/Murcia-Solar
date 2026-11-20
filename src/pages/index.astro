@@ -5,6 +5,7 @@ import Contact from '../components/Contact.astro';
 import home from '../data/home.json';
 const base = import.meta.env.BASE_URL;
 const asset = (name: string) => base + 'imagenes/home/' + name + '.webp';
+const [lead, ...rest] = home.hero.title.split(', ');
 const whatsapp = 'https://api.whatsapp.com/send?phone=34635570836';
 ---
 <Site title={home.hero.title} description={home.hero.intro}>
@@ -16,16 +17,26 @@ const whatsapp = 'https://api.whatsapp.com/send?phone=34635570836';
   </div></header>
   <main id="contenido">
     <section class="hero">
-      <img class="hero-image" src={base + 'imagenes/panorama.webp'} alt="Instalación solar fotovoltaica vista panorámica en Murcia" fetchpriority="high" width="1400" height="1050" />
-      <div class="wrap hero-grid">
-        <div class="hero-text"><h1>{home.hero.title}</h1><p class="intro">{home.hero.intro}</p><p class="cert-line">{home.hero.certifications}</p>
-          <ul class="benefits">{home.hero.benefits.map(item=><li>{item}</li>)}</ul>
-          <div class="actions"><a class="btn gold" href="tel:635570836">Pide presupuesto gratis</a><a class="btn glass" href={whatsapp}>WhatsApp 635 570 836</a></div>
+      <div class="wrap cover">
+        <div class="cover-heading">
+          <h1><span>{lead},</span> {rest.join(', ')}</h1>
+          <p class="intro">{home.hero.intro}</p>
+          <div class="actions"><a class="btn gold" href="tel:635570836">Pide presupuesto gratis</a><a class="text-action" href={whatsapp}>WhatsApp 635 570 836</a></div>
         </div>
-        <Contact />
+        <figure class="cover-photo">
+          <div class="sun-print" aria-hidden="true"></div>
+          <img src={asset('instalacion-05')} alt="Detalle de los paneles fotovoltaicos instalados sobre una cubierta en Murcia" fetchpriority="high" width="1250" height="938" />
+        </figure>
+        <ul class="benefits">{home.hero.benefits.map(item=><li>{item}</li>)}</ul>
       </div>
+      <div class="credential-strip"><div class="wrap">{home.hero.certifications}</div></div>
     </section>
-    <aside class="wrap offer"><a href="https://murciasolar.es/detector-fugas-dc-v2c-trydan-md0630t01a/"><img loading="lazy" src={asset('oferta-v2c')} alt="Gran oferta de lanzamiento. Detector de fugas DC MD0630T01A compatible con V2C Trydan por 70 € IVA incluido. Comprar ahora." /></a></aside>
+    <aside class="launch"><div class="wrap launch-inner">
+      <div><small>¡Gran oferta de lanzamiento!</small><h2>Detector de fugas DC 6mA con V2C Trydan</h2></div>
+      <div class="launch-copy"><strong>Compatible con V2C Trydan</strong><ul><li>Seguridad para tu instalación</li><li>Instalación fácil y rápida</li><li>Cumple normativa</li></ul></div>
+      <a class="launch-price" href="https://murciasolar.es/detector-fugas-dc-v2c-trydan-md0630t01a/"><small>¡Por solo!</small><strong>70€</strong><small>IVA incluido</small><b>Comprar ahora · ¡Hazte con él!</b></a>
+      <p>Oferta por tiempo limitado. ¡No te lo pierdas!</p>
+    </div></aside>
     <section class="wrap block">
       <div class="split"><h2>{home.problem.title}</h2><p>{home.problem.intro}</p></div>
       <div class="problems">{home.problem.items.map(item=><article><h3>{item.title}</h3><p>{item.body}</p></article>)}</div>
@@ -40,10 +51,10 @@ const whatsapp = 'https://api.whatsapp.com/send?phone=34635570836';
       <div class="gallery" tabindex="0" aria-label="Fotografías de instalaciones">{home.gallery.map(photo=><img src={asset(photo.image)} alt={photo.alt} loading="lazy" width="900" height="660" />)}</div>
     </section>
     <section class="trust"><div class="wrap block"><div class="split"><h2>{home.trust.title}</h2><p>{home.trust.intro}</p></div><dl class="stats">{home.trust.items.map(item=><div><dt>{item.value}</dt><dd>{item.label}</dd></div>)}</dl></div></section>
-    <section class="wrap block process"><h2>{home.process.title}</h2><ol>{home.process.items.map(item=><li><span>{item.number}</span><div><h3>{item.title}</h3><p>{item.body}</p></div></li>)}</ol></section>
+    <section class="wrap block process"><div class="process-report"><h2>{home.process.title}</h2><img loading="lazy" src={asset('instalacion-01')} alt="Técnico de Murcia Solar durante el montaje de la estructura" width="780" height="758" /></div><ol>{home.process.items.map(item=><li><span>{item.number}</span><div><h3>{item.title}</h3><p>{item.body}</p></div></li>)}</ol></section>
     <section class="press"><div class="wrap"><h2>{home.press.title}</h2><div class="press-logos">{home.press.items.map(item=>item.href?<a href={item.href}><img src={asset(item.image)} alt={item.alt} loading="lazy" /></a>:<img src={asset(item.image)} alt={item.alt} loading="lazy" />)}</div></div></section>
-    <section class="contact" id="contacto"><div class="wrap block"><h2>{home.contact.title}</h2><p>{home.contact.intro}</p>
-      <div class="channels"><a href="tel:+34635570836"><strong>Llámanos</strong><b>635 570 836</b><small>L-V 9-19h · S 9-14h</small></a><a href={whatsapp}><strong>WhatsApp</strong><b>Enviar mensaje</b><small>Respuesta inmediata</small></a><a href="#formulario"><strong>Formulario</strong><b>Rellena el formulario de abajo y te llamamos nosotros.</b></a></div>
+    <section class="contact" id="contacto"><div class="wrap block contact-spread"><div><h2>{home.contact.title}</h2><p>{home.contact.intro}</p>
+      <div class="channels"><a href="tel:+34635570836"><strong>Llámanos</strong><b>635 570 836</b><small>L-V 9-19h · S 9-14h</small></a><a href={whatsapp}><strong>WhatsApp</strong><b>Enviar mensaje</b><small>Respuesta inmediata</small></a><a href="#formulario"><strong>Formulario</strong><b>Rellena el formulario de abajo y te llamamos nosotros.</b></a></div></div><Contact />
     </div></section>
     <section class="wrap block location"><div><h2>Placas Solares Murcia</h2><address>C. de la Manga, 11, 30005 Murcia<br />Murcia<br /><a href="tel:635570836">635 570 836</a></address></div>
       <iframe loading="lazy" title="placas solares murcia calle la manga" src="https://maps.google.com/maps?q=placas%20solares%20murcia%20calle%20la%20manga&amp;t=m&amp;z=10&amp;output=embed&amp;iwloc=near"></iframe>
