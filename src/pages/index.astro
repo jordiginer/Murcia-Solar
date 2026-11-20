@@ -1,221 +1,91 @@
 ---
-import PageDirectory from '../components/PageDirectory.astro';
-import SolarDay from '../components/SolarDay.astro';
-import Brand from '../components/Brand.astro';
 import Site from '../layouts/Site.astro';
+import PageDirectory from '../components/PageDirectory.astro';
 import Contact from '../components/Contact.astro';
-import Solutions from '../components/Solutions.astro';
-
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const photo = (name: string) => `${base}/imagenes/${name}.webp`;
-const services = [
-  {
-    name: 'Placas solares',
-    price: 'Desde 4.000 €',
-    need: 'Producir mi electricidad',
-    title: 'Autoconsumo solar',
-    text: 'Diseñamos el autoconsumo para viviendas, comunidades y naves. Un inversor híbrido permite añadir una batería más adelante. La referencia publicada de ahorro es de 700 a 1.200 € al año, con una amortización estimada de 5 a 8 años. Tu estudio ajusta ambas cifras a tu consumo.',
-    points: ['Viviendas, comunidades, comercios y naves', 'Estudio técnico gratuito', 'Legalización y gestión de ayudas aplicables'],
-    link: 'https://murciasolar.es/instalacion-de-paneles-solares-en-murcia/',
-  },
-  {
-    name: 'Cargador eléctrico',
-    price: 'Desde 600 €',
-    need: 'Cargar mi coche',
-    title: 'Recarga en tu garaje',
-    text: 'Instalamos Tesla Wall Connector y V2C Trydan en garajes particulares y empresas. Hay opciones monofásicas y trifásicas de hasta 22 kW. La potencia de carga depende del coche y de la instalación disponible.',
-    points: ['Garajes particulares y empresas', 'Revisión de potencia y cuadro eléctrico', 'Instalación y boletín eléctrico'],
-    link: 'https://murciasolar.es/instalador-de-cargador-de-coche-electrico-en-murcia/',
-  },
-  {
-    name: 'Aerotermia',
-    need: 'Climatizar mi vivienda',
-    title: 'Climatización con aerotermia',
-    text: 'Dimensionamos el equipo según tu vivienda y el uso que le das durante el año.',
-    points: ['Calefacción, refrigeración y agua caliente', 'Sustitución de calderas', 'Integración con sistemas compatibles'],
-    link: 'https://murciasolar.es/instalacion-aerotermia-murcia/',
-  },
-  {
-    name: 'Electricidad',
-    need: 'Revisar mi instalación',
-    title: 'Electricistas en Murcia',
-    text: 'Hacemos instalaciones nuevas, renovamos cuadros y emitimos boletines. También atendemos averías urgentes en noches y festivos.',
-    points: ['Viviendas, locales y naves', 'Cuadros, circuitos y boletines', 'Atención de urgencias 24 h'],
-    link: 'https://murciasolar.es/electricista-murcia/',
-  },
-];
+import home from '../data/home.json';
+const base = import.meta.env.BASE_URL;
+const asset = (name: string) => base + 'imagenes/home/' + name + '.webp';
+const whatsapp = 'https://api.whatsapp.com/send?phone=34635570836';
 ---
-
-<Site title="Murcia Solar · Placas solares, recarga y electricidad en Murcia" description="Instalaciones solares para viviendas, comunidades y empresas. Cargadores Tesla y V2C, aerotermia y servicios eléctricos en la Región de Murcia.">
-  <header class="header" id="inicio">
-    <div class="wrap header-inner">
-      <Brand />
-      <button class="menu-button" aria-expanded="false" aria-controls="main-nav" hidden>Menú <span aria-hidden="true">☰</span></button>
-      <nav id="main-nav" aria-label="Principal">
-        <a href="#soluciones">Soluciones</a><a href="#instalaciones">Instalaciones</a><a href="#proceso">Cómo trabajamos</a>
-        <details class="directory-menu"><summary>Más páginas</summary><PageDirectory /></details>
-      </nav>
-      <a class="button header-action" href="#contacto">Pedir presupuesto</a>
-    </div>
-  </header>
+<Site title={home.hero.title} description={home.hero.intro}>
+  <div class="top"><div class="wrap"><span>L–V 9–19h · S 9–14h | <a href="tel:635570836">635 570 836</a> | Murcia</span><span>Instaladores certificados Tesla · V2C · +10 años</span></div></div>
+  <header id="inicio"><div class="wrap head">
+    <a class="brand" href="#inicio"><img src={asset('logo-cabecera')} alt="Placas Solares Murcia" /></a>
+    <nav aria-label="Principal"><a href="#soluciones">Soluciones</a><a href="#instalaciones">Nuestras instalaciones</a><a href="#contacto">Contacto</a></nav>
+    <details class="menu"><summary>Menú</summary><div class="menu-panel"><PageDirectory /></div></details>
+  </div></header>
   <main id="contenido">
-    <section class="hero" aria-labelledby="principal">
-      <div class="wrap hero-copy">
-        <p class="kicker"><span></span> Autoconsumo · Región de Murcia</p>
-        <h1 id="principal">Pon el sol de Murcia<br/><em>a trabajar.</em></h1>
-        <p class="intro">Placas para tu tejado, recarga para tu coche y un equipo de Murcia que se ocupa del estudio, la instalación y los trámites.</p>
-        <div class="hero-actions"><a class="button dark" href="#contacto">Solicitar estudio gratuito</a><a class="quiet" href="#instalaciones">Ver instalaciones</a></div>
-      </div>
-      <figure class="hero-figure" aria-label="Fotografías de nuestras instalaciones">
-        <img id="featured-photo" src={photo('cubierta')} width="1350" height="1013" fetchpriority="high" alt="Detalle de un panel solar sobre una cubierta de teja en Murcia" />
-        <div class="solar-track" aria-hidden="true"><span></span></div>
-        <div class="photo-bar">
-          <figcaption id="featured-caption" aria-live="polite"><small>Instalación residencial</small><strong>Fotovoltaica sobre teja</strong></figcaption>
-          <div class="gallery-controls" hidden>
-            <button type="button" aria-label="Fotografía anterior" data-step="-1">‹</button>
-            <button type="button" aria-label="Fotografía siguiente" data-step="1">›</button>
-          </div>
+    <section class="hero">
+      <img class="hero-image" src={base + 'imagenes/panorama.webp'} alt="Instalación solar fotovoltaica vista panorámica en Murcia" fetchpriority="high" width="1400" height="1050" />
+      <div class="wrap hero-grid">
+        <div class="hero-text"><h1>{home.hero.title}</h1><p class="intro">{home.hero.intro}</p><p class="cert-line">{home.hero.certifications}</p>
+          <ul class="benefits">{home.hero.benefits.map(item=><li>{item}</li>)}</ul>
+          <div class="actions"><a class="btn gold" href="tel:635570836">Pide presupuesto gratis</a><a class="btn glass" href={whatsapp}>WhatsApp 635 570 836</a></div>
         </div>
-      </figure>
-    </section>
-    <div class="credentials"><div class="wrap proof">
-      <div><strong>+10 años</strong><span>instalando en la Región</span></div>
-      <div><strong>24 horas</strong><span>de servicio de urgencias</span></div>
-      <div><strong>Tesla y V2C</strong><span>certificaciones oficiales</span></div>
-    </div></div>
-    <Solutions services={services} />
-    <SolarDay />
-
-    <section class="works" id="instalaciones" aria-labelledby="trabajos-titulo">
-      <div class="wrap section-space">
-        <div class="section-head">
-          <div><p class="kicker"><span></span> Instalaciones de Murcia Solar</p><h2 id="trabajos-titulo">Cubiertas de la Región.</h2></div>
-          <p>Paneles en cubiertas industriales y azoteas residenciales. Cada proyecto aprovecha el espacio y la orientación disponibles.</p>
-        </div>
-        <div class="portfolio grid">
-          <figure class="portfolio-main">
-            <div class="photo-frame"><img src={photo('panorama')} width="1400" height="1050" loading="lazy" alt="Vista de los paneles sobre una cubierta industrial" /></div>
-            <figcaption><strong>Cubierta industrial</strong><span>Autoconsumo para empresas</span><p>En una nave importa cuándo arrancan las máquinas y cuánto consumen durante el turno. Contrastamos ese horario con la superficie disponible para paneles.</p></figcaption>
-          </figure>
-          <figure class="portfolio-side">
-            <div class="photo-frame"><img src={photo('azotea')} width="1000" height="750" loading="lazy" alt="Paneles solares instalados en una azotea con estructura inclinada" /></div>
-            <figcaption><strong>Instalación en azotea</strong><span>Autoconsumo residencial</span><p>Sobre una azotea plana, la estructura da inclinación a los módulos. Revisamos las sombras entre filas y dejamos acceso para su mantenimiento.</p></figcaption>
-          </figure>
-        </div>
+        <Contact />
       </div>
     </section>
-
-    <section class="wrap section-space process" id="proceso" aria-labelledby="proceso-titulo">
-      <figure class="process-photo">
-        <div class="photo-frame"><img src={photo('montaje')} width="850" height="825" loading="lazy" alt="Técnico de Murcia Solar montando los soportes de una instalación solar" /></div>
-        <figcaption>Montaje de la estructura fotovoltaica</figcaption>
-      </figure>
-      <div>
-        <p class="kicker"><span></span> Nuestro oficio</p>
-        <h2 id="proceso-titulo">Del estudio a la puesta en marcha.</h2>
-        <ol class="steps">
-          <li><strong>Entendemos tu caso</strong><span>Por teléfono o WhatsApp, cuéntanos si es una vivienda, comunidad o nave y qué necesitas resolver.</span></li>
-          <li><strong>Medimos y presupuestamos</strong><span>El estudio técnico es gratuito, con visita presencial o remota. Revisamos consumo, cubierta o cuadro para preparar un presupuesto cerrado en menos de 24 horas.</span></li>
-          <li><strong>Instalamos y legalizamos</strong><span>Montamos los equipos y tramitamos la legalización. Revisamos las subvenciones y la bonificación del IBI que correspondan en tu municipio.</span></li>
-          <li><strong>Seguimos disponibles</strong><span>Monitorizamos la instalación y ofrecemos mantenimiento anual. Para averías eléctricas contamos con atención de urgencia incluso de noche y en festivos.</span></li>
-        </ol>
-        <a class="text-link" href="https://murciasolar.es/testimonios-clientes-murcia-solar/">Leer opiniones sobre el equipo</a>
-      </div>
+    <aside class="wrap offer"><a href="https://murciasolar.es/detector-fugas-dc-v2c-trydan-md0630t01a/"><img loading="lazy" src={asset('oferta-v2c')} alt="Gran oferta de lanzamiento. Detector de fugas DC MD0630T01A compatible con V2C Trydan por 70 € IVA incluido. Comprar ahora." /></a></aside>
+    <section class="wrap block">
+      <div class="split"><h2>{home.problem.title}</h2><p>{home.problem.intro}</p></div>
+      <div class="problems">{home.problem.items.map(item=><article><h3>{item.title}</h3><p>{item.body}</p></article>)}</div>
+      <p class="conclusion">{home.problem.end}</p>
     </section>
-
-    <aside class="local-team" aria-labelledby="team-title"><div class="wrap team-inner">
-      <div><p class="kicker"><span></span> El equipo local</p><h2 id="team-title">Raíces en Murcia.</h2></div>
-      <div><p>Murcia Solar forma parte de Grupo Quo Telecom, empresa tecnológica murciana con trayectoria desde 2010. Nuestro equipo está especializado en renovables y electrónica de potencia.</p><p>Nos encontrarás en la calle de la Manga, 11, en Murcia. Desde allí atendemos instalaciones en toda la Región.</p><a class="quiet" href="tel:+34635570836">Hablar con el equipo · 635 570 836</a></div>
-    </div></aside>
-    <section class="wrap faq section-space" aria-labelledby="faq-title">
-      <div><p class="kicker"><span></span> Antes del estudio</p><h2 id="faq-title">Dudas de tejado.</h2></div>
-      <div class="faq-list">
-        <details><summary>¿Qué necesito para pedir un estudio?</summary><p>Una factura reciente y la dirección del inmueble permiten empezar a revisar tu consumo y la cubierta. Si tienes fotos del tejado o del cuadro eléctrico, también ayudan a preparar la visita.</p></details>
-        <details><summary>¿Me interesa instalar una batería?</summary><p>Depende de cuándo consumes. Si usas más electricidad al caer la tarde, conviene comparar el coste de almacenar los excedentes con el ahorro que tendrías en esas horas.</p></details>
-        <details><summary>¿Puedo cargar el coche con mis placas?</summary><p>Sí, con un punto de recarga compatible. Revisamos el inversor, la potencia disponible y tus horarios para valorar una recarga que aproveche los excedentes solares.</p></details>
-        <details><summary>¿Qué opciones hay para financiar la instalación?</summary><p>Murcia Solar anuncia financiación desde el 3 % TAE. Pide al equipo el plazo, la cuota y las condiciones vigentes para tu presupuesto.</p></details>
-        <details><summary>¿Quién se ocupa de la legalización?</summary><p>Murcia Solar gestiona la documentación de la instalación y revisa qué ayudas pueden aplicarse a tu proyecto.</p></details>
-      </div>
+    <section class="services" id="soluciones"><div class="wrap block">
+      <h2>{home.services.title}</h2><div class="service-list">{home.services.items.map(item=><article>
+        <h3>{item.title}</h3><div><p>{item.body}</p><ul>{item.points.map(point=><li>{point}</li>)}</ul><button class="under" data-upcoming={item.title} aria-haspopup="dialog">{item.action}</button></div>
+      </article>)}</div>
+    </div></section>
+    <section class="wrap block" id="instalaciones"><div class="gallery-head"><h2>Nuestras instalaciones</h2><div class="gallery-buttons"><button aria-label="Anterior" data-step="-1">‹</button><button aria-label="Siguiente" data-step="1">›</button></div></div>
+      <div class="gallery" tabindex="0" aria-label="Fotografías de instalaciones">{home.gallery.map(photo=><img src={asset(photo.image)} alt={photo.alt} loading="lazy" width="900" height="660" />)}</div>
     </section>
-    <Contact services={services} />
+    <section class="trust"><div class="wrap block"><div class="split"><h2>{home.trust.title}</h2><p>{home.trust.intro}</p></div><dl class="stats">{home.trust.items.map(item=><div><dt>{item.value}</dt><dd>{item.label}</dd></div>)}</dl></div></section>
+    <section class="wrap block process"><h2>{home.process.title}</h2><ol>{home.process.items.map(item=><li><span>{item.number}</span><div><h3>{item.title}</h3><p>{item.body}</p></div></li>)}</ol></section>
+    <section class="press"><div class="wrap"><h2>{home.press.title}</h2><div class="press-logos">{home.press.items.map(item=>item.href?<a href={item.href}><img src={asset(item.image)} alt={item.alt} loading="lazy" /></a>:<img src={asset(item.image)} alt={item.alt} loading="lazy" />)}</div></div></section>
+    <section class="contact" id="contacto"><div class="wrap block"><h2>{home.contact.title}</h2><p>{home.contact.intro}</p>
+      <div class="channels"><a href="tel:+34635570836"><strong>Llámanos</strong><b>635 570 836</b><small>L-V 9-19h · S 9-14h</small></a><a href={whatsapp}><strong>WhatsApp</strong><b>Enviar mensaje</b><small>Respuesta inmediata</small></a><a href="#formulario"><strong>Formulario</strong><b>Rellena el formulario de abajo y te llamamos nosotros.</b></a></div>
+    </div></section>
+    <section class="wrap block location"><div><h2>Placas Solares Murcia</h2><address>C. de la Manga, 11, 30005 Murcia<br />Murcia<br /><a href="tel:635570836">635 570 836</a></address></div>
+      <iframe loading="lazy" title="placas solares murcia calle la manga" src="https://maps.google.com/maps?q=placas%20solares%20murcia%20calle%20la%20manga&amp;t=m&amp;z=10&amp;output=embed&amp;iwloc=near"></iframe>
+    </section>
   </main>
-
-  <footer class="footer">
-    <div class="wrap footer-inner">
-      <div><Brand /><address>Murcia Solar Servicios Eléctricos SLU<br />C. de la Manga, 11 · 30005 Murcia</address><a class="text-link" href="https://murciasolar.es/politica-privacidad/">Privacidad</a></div>
-      <nav aria-label="Páginas del sitio"><PageDirectory /></nav>
-    </div>
-  </footer>
-  <dialog id="upcoming" aria-labelledby="upcoming-title" aria-describedby="upcoming-description">
-    <p class="kicker"><span></span><span id="upcoming-page"></span></p>
-    <h2 id="upcoming-title">Próximamente.</h2>
-    <p id="upcoming-description">Estamos preparando esta página. Mientras tanto, puedes consultar al equipo desde la portada.</p>
-    <form method="dialog"><button class="button dark" autofocus>Volver a la home</button></form>
-  </dialog>
+  <footer><div class="wrap">
+    <div class="footer-main"><div><a class="brand" href="#inicio"><img src={asset('logo-cabecera')} alt="Placas Solares Murcia" /></a><address>Placas Solares Murcia<br />C. de la Manga, 11, 30005 Murcia<br />Murcia · <a href="tel:635570836">635 570 836</a></address><a href="https://www.tiktok.com/@victorhackeros">Tiktok</a><p>© 2023 Murcia Solar.</p></div><nav aria-label="Páginas del sitio"><PageDirectory /></nav></div>
+    <div class="certs">{[['V2C','/instalador-certificado-v2c/'],['TESLA ENERGY','/instalador-certificado-tesla-energy/']].map(([name,path])=><a href={'https://murciasolar.es'+path}><strong>{name}</strong> Instalador Certificado <u>Ver certificación →</u></a>)}</div>
+    <div class="legal"><span>© 2026 Murcia Solar Servicios Eléctricos SLU</span><a href="https://murciasolar.es/politica-privacidad/">Política de privacidad</a></div>
+  </div></footer>
+  <a class="help" href={whatsapp}>¿Necesitas ayuda?</a>
+  <dialog id="upcoming" aria-labelledby="upcoming-title"><p id="upcoming-page"></p><h2 id="upcoming-title">Próximamente</h2><form method="dialog"><button class="btn gold" autofocus>Volver a la home</button></form></dialog>
 </Site>
-
 <script>
-  const menu = document.querySelector<HTMLButtonElement>('.menu-button')!;
-  menu.hidden = false;
-  const closeMenu = () => menu.setAttribute('aria-expanded', 'false');
-  menu.addEventListener('click', () => menu.setAttribute('aria-expanded', String(menu.getAttribute('aria-expanded') !== 'true')));
-  const directory = document.querySelector<HTMLDetailsElement>('.directory-menu')!;
-  document.querySelector('#main-nav')!.addEventListener('click', event => {
-    if (event.target instanceof Element && event.target.closest('a')) { closeMenu(); directory.open = false; }
-  });
-  const dialog = document.querySelector<HTMLDialogElement>('#upcoming')!;
-  document.querySelectorAll<HTMLButtonElement>('[data-upcoming]').forEach(button => {
-    button.addEventListener('click', () => {
-      document.querySelector('#upcoming-page')!.textContent = button.dataset.upcoming!;
-      dialog.showModal();
-    });
-  });
-  dialog.addEventListener('click', event => {
-    if (event.target === dialog && !dialog.querySelector(':hover')) {
-      const box = dialog.getBoundingClientRect();
-      if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) dialog.close();
-    }
-  });
+  const modal = document.querySelector<HTMLDialogElement>('#upcoming')!;
+  document.querySelectorAll<HTMLButtonElement>('[data-upcoming]').forEach(button => button.addEventListener('click', () => {
+    document.querySelector('#upcoming-page')!.textContent = button.dataset.upcoming!;
+    modal.showModal();
+  }));
+  const menu = document.querySelector<HTMLDetailsElement>('.menu')!;
   document.addEventListener('click', event => {
-    if (dialog.open || !(event.target instanceof Element) || event.target.closest('#upcoming')) return;
-    if (!directory.contains(event.target)) directory.open = false;
+    if (event.target instanceof Element && !modal.open && !event.target.closest('.menu,dialog')) menu.open = false;
   });
   document.addEventListener('keydown', event => {
-    if (event.key !== 'Escape' || dialog.open) return;
-    if (directory.open) { directory.open = false; directory.querySelector('summary')!.focus(); return; }
-    if (menu.getAttribute('aria-expanded') === 'true') { closeMenu(); menu.focus(); }
+    if (event.key === 'Escape' && !modal.open && menu.open) { menu.open = false; menu.querySelector('summary')!.focus(); }
   });
-  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-  if ('IntersectionObserver' in window && !reducedMotion.matches) {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        if (!reducedMotion.matches) entry.target.animate([{opacity: .45, transform: 'translateY(15px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 500, easing: 'ease-out'});
+  const gallery = document.querySelector<HTMLElement>('.gallery')!;
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  document.querySelectorAll<HTMLButtonElement>('[data-step]').forEach(button => button.addEventListener('click', () => {
+    const step = Number(button.dataset.step);
+    const max = gallery.scrollWidth - gallery.clientWidth;
+    const width = gallery.children[1].getBoundingClientRect().left - gallery.children[0].getBoundingClientRect().left;
+    const left = step > 0 && gallery.scrollLeft >= max - 2 ? 0 : step < 0 && gallery.scrollLeft <= 2 ? max : gallery.scrollLeft + step * width;
+    gallery.scrollTo({left, behavior: motion.matches ? 'instant' : 'smooth'});
+  }));
+  if ('IntersectionObserver' in window && !motion.matches) {
+    const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        if (!motion.matches) entry.target.animate([{opacity:.55,transform:'translateY(12px)'},{opacity:1,transform:'translateY(0)'}], {duration:440,easing:'ease-out'});
         observer.unobserve(entry.target);
-      });
-    });
-    document.querySelectorAll('.section-head, .portfolio figure, .steps li, .day-demo, .faq-list').forEach(el => observer.observe(el));
+      }
+    }));
+    document.querySelectorAll('.block > h2,.split,.process li,.stats > div').forEach(el => observer.observe(el));
   }
-  const photo = document.querySelector<HTMLImageElement>('#featured-photo')!;
-  const caption = document.querySelector<HTMLElement>('#featured-caption')!;
-  const controls = document.querySelector<HTMLElement>('.gallery-controls')!;
-  const slides = [
-    ['cubierta', 'Detalle de un panel solar sobre una cubierta de teja en Murcia', 'Instalación residencial', 'Fotovoltaica sobre teja'],
-    ['panorama', 'Paneles fotovoltaicos sobre una nave', 'Instalación industrial', 'Autoconsumo en cubierta'],
-    ['azotea', 'Paneles inclinados sobre una azotea', 'Instalación residencial', 'Paneles en azotea'],
-  ];
-  const photoDirectory = new URL('.', photo.src);
-  let current = 0;
-  controls.hidden = false;
-  controls.querySelectorAll<HTMLButtonElement>('button').forEach(button => {
-    button.addEventListener('click', () => {
-      current = (current + Number(button.dataset.step) + slides.length) % slides.length;
-      const [file, alt, category, title] = slides[current];
-      photo.src = new URL(file + '.webp', photoDirectory).href;
-      photo.alt = alt;
-      if (!reducedMotion.matches) photo.animate([{opacity:.6}, {opacity:1}], {duration:340});
-      caption.querySelector('small')!.textContent = category;
-      caption.querySelector('strong')!.textContent = title;
-    });
-  });
 </script>

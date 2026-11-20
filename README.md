@@ -9,7 +9,7 @@ npm run build
 npm run preview
 ```
 
-El build genera el sitio en `dist/`. Las fotografías proceden del sitio de Murcia Solar. El formulario prepara un borrador para WhatsApp sin un servidor de formularios. La propuesta incluye `noindex`.
+El build genera el sitio en `dist/`. Las fotografías proceden del sitio de Murcia Solar. El formulario utiliza la acción POST del formulario original de Murcia Solar. La propuesta incluye `noindex`.
 
 ## Referencias de diseño
 

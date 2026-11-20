@@ -1,0 +1,190 @@
+{
+  "hero": {
+    "title": "Placas Solares, Cargadores Coche Eléctrico y Electricista en Murcia",
+    "intro": "Más de 10 años instalando soluciones energéticas que ahorran dinero. Instalador certificado Tesla Energy y V2C en toda la Región de Murcia.",
+    "certifications": "Instalador certificado Tesla Energy | Certificado V2C Trydan | Más de 10 años de experiencia",
+    "benefits": [
+      "Libertad solar",
+      "100% ecológica",
+      "Energía rentable"
+    ]
+  },
+  "problem": {
+    "title": "La factura de la luz en Murcia no va a bajar",
+    "intro": "Murcia tiene más de 2.800 horas de sol al año, pero la mayoría de los hogares murcianos siguen pagando facturas que han subido más de un 30% en los últimos 4 años. Los coches eléctricos crecen un 50% anual y cualquier corte de luz a las 22:00 un domingo te deja sin electricista de urgencias.",
+    "items": [
+      {
+        "title": "Pagas más de 100 €/mes de luz",
+        "body": "Aunque haces \"un consumo normal\", la factura no para de subir. Las placas solares pueden reducirla entre un 60% y un 90%.",
+        "points": []
+      },
+      {
+        "title": "Necesitas un punto de carga certificado",
+        "body": "Tienes coche eléctrico (o lo vas a comprar) y necesitas un wallbox fiable, instalado por un certificado Tesla o V2C.",
+        "points": []
+      },
+      {
+        "title": "Electricista 24h que aparezca de verdad",
+        "body": "Necesitas un electricista de confianza cuando saltan los plomos un domingo por la noche. Sin excusas.",
+        "points": []
+      }
+    ],
+    "end": "La buena noticia: las tres se resuelven con una sola llamada."
+  },
+  "services": {
+    "title": "Tres formas de ahorrar (y dejar de preocuparte) por la energía",
+    "items": [
+      {
+        "title": "Placas Solares Fotovoltaicas",
+        "body": "Diseñamos e instalamos sistemas de autoconsumo solar para vivienda, empresa e industria. Desde 4.000 €, amortización en 5-8 años, ahorro de 700-1.200 €/año.",
+        "points": [
+          "Estudio gratuito + tramitación de subvenciones",
+          "Inversor híbrido para baterías futuras",
+          "Garantía total en equipos y mano de obra"
+        ],
+        "action": "Ver placas solares"
+      },
+      {
+        "title": "Cargador Coche Eléctrico (Tesla + V2C)",
+        "body": "Somos instaladores certificados Tesla Wall Connector y V2C Trydan. Wallbox desde 600 €, mono y trifásico hasta 22 kW, compatible con fotovoltaica.",
+        "points": [
+          "Certificados oficiales Tesla Energy y V2C",
+          "Instalación + boletín eléctrico incluido",
+          "Compatible con placas solares para cargar gratis"
+        ],
+        "action": "Ver cargadores eléctricos"
+      },
+      {
+        "title": "Electricista 24h en Murcia",
+        "body": "Electricista profesional para urgencias 24 horas, instalaciones nuevas, cambios de cuadro y boletines. Atendemos festivos y fines de semana.",
+        "points": [
+          "Urgencias 24h (noches y festivos incluidos)",
+          "Boletín eléctrico para alta o venta de vivienda",
+          "Domótica e instalación de suelo radiante"
+        ],
+        "action": "Ver electricista"
+      }
+    ]
+  },
+  "trust": {
+    "title": "Por qué confían en Murcia Solar",
+    "intro": "No somos una empresa cualquiera: formamos parte del Grupo Quo Telecom, empresa tecnológica murciana desde 2010, especializados en renovables y electrónica de potencia.",
+    "items": [
+      {
+        "value": "+10 años",
+        "label": "de experiencia en el sector (desde 2010)"
+      },
+      {
+        "value": "+45",
+        "label": "municipios atendidos en la Región de Murcia"
+      },
+      {
+        "value": "2",
+        "label": "certificaciones oficiales (Tesla Energy + V2C)"
+      },
+      {
+        "value": "24h",
+        "label": "presupuesto cerrado en menos de 24 horas"
+      },
+      {
+        "value": "100%",
+        "label": "garantía en equipo y mano de obra"
+      },
+      {
+        "value": "3% TAE",
+        "label": "financiación disponible desde 3% TAE"
+      }
+    ]
+  },
+  "process": {
+    "title": "Tu instalación en 4 pasos sencillos",
+    "items": [
+      {
+        "number": "01",
+        "title": "Cuéntanos qué necesitas",
+        "body": "Llámanos al 635 570 836 o mándanos un WhatsApp. Sin compromiso. Te asesoramos sobre qué solución encaja con tu caso: vivienda, empresa, comunidad o industria."
+      },
+      {
+        "number": "02",
+        "title": "Estudio técnico gratuito",
+        "body": "Visita in situ (o remota). Medimos consumos, inspeccionamos cubierta o cuadro y diseñamos la solución más rentable. Presupuesto cerrado en menos de 24 horas."
+      },
+      {
+        "number": "03",
+        "title": "Instalación profesional",
+        "body": "Montamos con materiales de primera marca (Tesla, V2C, Daikin, Vaillant). Tramitamos legalización, subvenciones y bonificación de IBI por ti."
+      },
+      {
+        "number": "04",
+        "title": "Servicio postventa y mantenimiento",
+        "body": "No te dejamos solo: monitorizamos tu instalación, ofrecemos mantenimiento anual y respondemos en menos de 24h a cualquier incidencia. Y si tu cuadro saca chispas un domingo, somos electricistas 24h."
+      }
+    ]
+  },
+  "press": {
+    "title": "Hablan de nosotros en:",
+    "items": [
+      {
+        "image": "avatarenergia",
+        "alt": "instalaciones fotovoltaicas de paneles solares",
+        "href": "https://avatarenergia.com/placas-solares-en-murcia/"
+      },
+      {
+        "image": "tiktok",
+        "alt": "enlace a tiktok",
+        "href": "https://www.tiktok.com/@victorhackeros"
+      },
+      {
+        "image": "banner-prensa",
+        "alt": "energía solar fotovoltaica",
+        "href": null
+      }
+    ]
+  },
+  "contact": {
+    "title": "Empieza a ahorrar hoy mismo",
+    "intro": "Pídenos presupuesto gratuito en menos de 24 horas. Sin compromiso, sin letra pequeña."
+  },
+  "gallery": [
+    {
+      "image": "instalacion-01",
+      "alt": "Instalacion placas solares Murcia"
+    },
+    {
+      "image": "instalacion-02",
+      "alt": "Paneles fotovoltaicos instalados"
+    },
+    {
+      "image": "instalacion-03",
+      "alt": "Instalacion solar tejado"
+    },
+    {
+      "image": "instalacion-04",
+      "alt": "Placas solares Murcia Solar"
+    },
+    {
+      "image": "instalacion-05",
+      "alt": "Instalacion fotovoltaica"
+    },
+    {
+      "image": "instalacion-06",
+      "alt": "Energia solar instalacion"
+    },
+    {
+      "image": "instalacion-07",
+      "alt": "Paneles solares tejado"
+    },
+    {
+      "image": "instalacion-08",
+      "alt": "Instalacion solar Murcia"
+    },
+    {
+      "image": "instalacion-09",
+      "alt": "Placas fotovoltaicas"
+    },
+    {
+      "image": "instalacion-10",
+      "alt": "Trabajo instalacion Murcia Solar"
+    }
+  ]
+}
