@@ -12,12 +12,12 @@ const { services } = Astro.props as { services: Solution[] };
 ---
 <section class="solutions wrap section-space" id="soluciones" aria-labelledby="soluciones-titulo">
   <div class="section-head">
-    <div><p class="kicker"><span></span> Nuestras soluciones</p><h2 id="soluciones-titulo">¿Qué necesitas instalar?</h2></div>
+    <div><p class="kicker"><span></span> Servicios</p><h2 id="soluciones-titulo">Instalaciones eléctricas y térmicas.</h2></div>
   </div>
   <div class="service-list">
     {services.map((service, index) => (
       <details class="service" name="solutions" open={index === 0}>
-        <summary><span class="service-index" aria-hidden="true">{String(index + 1).padStart(2,'0')}</span>{service.name}<span class="toggle" aria-hidden="true"></span></summary>
+        <summary>{service.name}<span class="toggle" aria-hidden="true"></span></summary>
         <div class="service-body">
           <p>{service.text}</p>
           <div><ul>{service.points.map(point => <li>{point}</li>)}</ul>
