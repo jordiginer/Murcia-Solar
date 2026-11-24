@@ -1,8 +1,5 @@
----
-const whatsapp = 'https://api.whatsapp.com/send?l=es&phone=34635570836';
----
-<div class="contact-form" id="formulario">
-  <a href={whatsapp}><h2>Mándanos un WhatsApp</h2></a>
+<div class="contact-form" id="formulario" data-reveal>
+  <h3>Solicita presupuesto</h3>
   <form action="https://murciasolar.es/#wpcf7-f1240-p6-o1" method="post" aria-label="Formulario de contacto">
     <input type="hidden" name="_wpcf7" value="1240" />
     <input type="hidden" name="_wpcf7_version" value="6.2.4.1" />
@@ -12,9 +9,21 @@ const whatsapp = 'https://api.whatsapp.com/send?l=es&phone=34635570836';
     <input type="hidden" name="_wpcf7_posted_data_hash" value="" />
     <label>Tu nombre<input name="your-name" autocomplete="name" maxlength="400" required /></label>
     <label>Tu correo electrónico<input type="email" name="your-email" autocomplete="email" maxlength="400" required /></label>
-    <label>Asunto<input name="your-subject" maxlength="400" required /></label>
-    <label>Tu mensaje (opcional)<textarea name="your-message" rows="2" maxlength="2000"></textarea></label>
-    <button class="btn gold" type="submit">Enviar</button>
+    <label>¿Qué servicio necesitas?
+      <select id="service-subject" name="your-subject" required>
+        <option value="">Selecciona un servicio</option>
+        <option>Placas solares</option>
+        <option>Carga para coche eléctrico</option>
+        <option>Electricidad</option>
+        <option>Climatización</option>
+        <option>Otro servicio</option>
+      </select>
+    </label>
+    <label>Cuéntanos más<textarea name="your-message" rows="2" maxlength="2000"></textarea></label>
+    <label class="consent">
+      <input type="checkbox" required />
+      <span>He leído la <a href="https://murciasolar.es/politica-privacidad/">política de privacidad</a>.</span>
+    </label>
+    <button class="btn gold" type="submit">Enviar solicitud ↗</button>
   </form>
-  <a class="form-phone" href="tel:635570836">LLAMANOS :635 570 836</a>
 </div>
