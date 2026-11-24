@@ -2,34 +2,37 @@
 import Site from '../layouts/Site.astro';
 import PageDirectory from '../components/PageDirectory.astro';
 import Contact from '../components/Contact.astro';
+import Projects from '../components/Projects.astro';
 import home from '../data/home.json';
 const base = import.meta.env.BASE_URL;
 const asset = (name: string) => base + 'imagenes/home/' + name + '.webp';
-const [lead, ...rest] = home.hero.title.split(', ');
 const whatsapp = 'https://api.whatsapp.com/send?phone=34635570836';
 ---
 <Site title={home.hero.title} description={home.hero.intro}>
   <div class="top"><div class="wrap"><span>L–V 9–19h · S 9–14h | <a href="tel:635570836">635 570 836</a> | Murcia</span><span>Instaladores certificados Tesla · V2C · +10 años</span></div></div>
   <header id="inicio"><div class="wrap head">
     <a class="brand" href="#inicio"><img src={asset('logo-cabecera')} alt="Placas Solares Murcia" /></a>
-    <nav aria-label="Principal"><a href="#soluciones">Soluciones</a><a href="#instalaciones">Nuestras instalaciones</a><a href="#contacto">Contacto</a></nav>
+    <nav aria-label="Principal"><a href="#soluciones">Soluciones</a><a href="#instalaciones">Instalaciones</a><a href="https://murciasolar.es/calculadora-ahorro-solar-murcia/">Calculadora solar</a><a href="#contacto">Contacto</a></nav>
     <details class="menu"><summary>Menú</summary><div class="menu-panel"><PageDirectory /></div></details>
   </div></header>
   <main id="contenido">
     <section class="hero">
-      <div class="wrap cover">
-        <div class="cover-heading">
-          <h1><span>{lead},</span> {rest.join(', ')}</h1>
-          <p class="intro">{home.hero.intro}</p>
-          <div class="actions"><a class="btn gold" href="tel:635570836">Pide presupuesto gratis</a><a class="text-action" href={whatsapp}>WhatsApp 635 570 836</a></div>
+      <div class="wrap editorial-cover">
+        <div>
+          <p class="eyebrow">Instaladores en la Región de Murcia</p>
+          <h1>El sol de Murcia,<br /> en tu tejado.</h1>
         </div>
-        <figure class="cover-photo">
-          <div class="sun-print" aria-hidden="true"></div>
-          <img src={asset('instalacion-05')} alt="Detalle de los paneles fotovoltaicos instalados sobre una cubierta en Murcia" fetchpriority="high" width="1250" height="938" />
+        <div class="cover-note">
+          <p>Placas solares, cargadores eléctricos, climatización y electricista 24 h.</p>
+          <a class="btn gold" href="#contacto">Pide tu estudio gratuito <span aria-hidden="true">↗</span></a>
+          <a class="cover-phone" href="tel:+34635570836">635 570 836</a>
+        </div>
+        <figure class="editorial-photo">
+          <img src={base + 'imagenes/panorama.webp'} alt="Paneles solares instalados sobre una cubierta en Murcia" fetchpriority="high" />
+          <figcaption>Instalaci?n solar en Murcia</figcaption>
         </figure>
-        <ul class="benefits">{home.hero.benefits.map(item=><li>{item}</li>)}</ul>
       </div>
-      <div class="credential-strip"><div class="wrap">{home.hero.certifications}</div></div>
+      <div class="editorial-credentials"><div class="wrap"><strong>Certificados Tesla Energy y V2C</strong><a href="#cobertura">Más de 10 años en Murcia · Más de 45 municipios atendidos <span aria-hidden="true">↗</span></a></div></div>
     </section>
     <aside class="launch"><div class="wrap launch-inner">
       <div><small>¡Gran oferta de lanzamiento!</small><h2>Detector de fugas DC 6mA con V2C Trydan</h2></div>
@@ -47,9 +50,7 @@ const whatsapp = 'https://api.whatsapp.com/send?phone=34635570836';
         <h3>{item.title}</h3><div><p>{item.body}</p><ul>{item.points.map(point=><li>{point}</li>)}</ul><button class="under" data-upcoming={item.title} aria-haspopup="dialog">{item.action}</button></div>
       </article>)}</div>
     </div></section>
-    <section class="wrap block" id="instalaciones"><div class="gallery-head"><h2>Nuestras instalaciones</h2><div class="gallery-buttons"><button aria-label="Anterior" data-step="-1">‹</button><button aria-label="Siguiente" data-step="1">›</button></div></div>
-      <div class="gallery" tabindex="0" aria-label="Fotografías de instalaciones">{home.gallery.map(photo=><img src={asset(photo.image)} alt={photo.alt} loading="lazy" width="900" height="660" />)}</div>
-    </section>
+    <Projects />
     <section class="trust"><div class="wrap block"><div class="split"><h2>{home.trust.title}</h2><p>{home.trust.intro}</p></div><dl class="stats">{home.trust.items.map(item=><div><dt>{item.value}</dt><dd>{item.label}</dd></div>)}</dl></div></section>
     <section class="wrap block process"><div class="process-report"><h2>{home.process.title}</h2><img loading="lazy" src={asset('instalacion-01')} alt="Técnico de Murcia Solar durante el montaje de la estructura" width="780" height="758" /></div><ol>{home.process.items.map(item=><li><span>{item.number}</span><div><h3>{item.title}</h3><p>{item.body}</p></div></li>)}</ol></section>
     <section class="press"><div class="wrap"><h2>{home.press.title}</h2><div class="press-logos">{home.press.items.map(item=>item.href?<a href={item.href}><img src={asset(item.image)} alt={item.alt} loading="lazy" /></a>:<img src={asset(item.image)} alt={item.alt} loading="lazy" />)}</div></div></section>
@@ -81,22 +82,23 @@ const whatsapp = 'https://api.whatsapp.com/send?phone=34635570836';
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && !modal.open && menu.open) { menu.open = false; menu.querySelector('summary')!.focus(); }
   });
-  const gallery = document.querySelector<HTMLElement>('.gallery')!;
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
-  document.querySelectorAll<HTMLButtonElement>('[data-step]').forEach(button => button.addEventListener('click', () => {
-    const step = Number(button.dataset.step);
-    const max = gallery.scrollWidth - gallery.clientWidth;
-    const width = gallery.children[1].getBoundingClientRect().left - gallery.children[0].getBoundingClientRect().left;
-    const left = step > 0 && gallery.scrollLeft >= max - 2 ? 0 : step < 0 && gallery.scrollLeft <= 2 ? max : gallery.scrollLeft + step * width;
-    gallery.scrollTo({left, behavior: motion.matches ? 'instant' : 'smooth'});
-  }));
   if ('IntersectionObserver' in window && !motion.matches) {
-    const observer = new IntersectionObserver(entries => entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        if (!motion.matches) entry.target.animate([{opacity:.55,transform:'translateY(12px)'},{opacity:1,transform:'translateY(0)'}], {duration:440,easing:'ease-out'});
-        observer.unobserve(entry.target);
+    const observer = new IntersectionObserver(entries => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        const element = entry.target as HTMLElement;
+        if (!motion.matches) {
+          element.animate(
+            [{ opacity: 0.65, transform: 'translateY(18px)' }, { opacity: 1, transform: 'translateY(0)' }],
+            { duration: 620, easing: 'cubic-bezier(.2,.65,.3,1)', delay: Number(element.dataset.delay ?? 0) },
+          );
+        }
+        observer.unobserve(element);
       }
-    }));
-    document.querySelectorAll('.block > h2,.split,.process li,.stats > div').forEach(el => observer.observe(el));
+    }, { threshold: 0.12 });
+    document.querySelectorAll('[data-reveal], .block > h2, .split, .process li, .stats > div, .service-list article').forEach(element => {
+      if (element.getBoundingClientRect().top >= innerHeight) observer.observe(element);
+    });
   }
 </script>

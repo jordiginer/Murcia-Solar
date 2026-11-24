@@ -1,0 +1,95 @@
+---
+const base = import.meta.env.BASE_URL + 'imagenes/';
+const photos = [
+  { file: 'panorama.webp', label: 'Instalación panorámica en Murcia' },
+  { file: 'montaje.webp', label: 'Montaje de la estructura en cubierta' },
+  { file: 'montepinar.jpg', label: 'Proyecto residencial en Montepinar' },
+];
+const towns = [
+  ['Cartagena', 'placas-solares-en-cartagena'],
+  ['Lorca', 'placas-solares-lorca'],
+  ['San Javier', 'placas-solares-en-san-javier'],
+  ['Molina de Segura', 'placas-solares-molina-de-segura'],
+  ['Ver toda la cobertura', 'zona-de-cobertura'],
+];
+---
+<section id="instalaciones" class="project-section" aria-labelledby="projects-title">
+  <div class="wrap block">
+    <header class="project-heading" data-reveal>
+      <p class="eyebrow">Instalaciones de Murcia Solar</p>
+      <h2 id="projects-title">Nuestro trabajo, visto de cerca.</h2>
+      <p>Abre una foto para recorrer la galería.</p>
+    </header>
+    <div class="project-grid">
+      {photos.map((photo, index) => (
+        <figure data-reveal data-delay={index * 55}>
+          <a class="project-photo" href={base + photo.file} data-photo={index} aria-label={'Ampliar: ' + photo.label}>
+            <img src={base + photo.file} alt={photo.label} loading="lazy" decoding="async" />
+            <span aria-hidden="true">↗</span>
+          </a>
+          <figcaption>{photo.label}</figcaption>
+        </figure>
+      ))}
+    </div>
+    <div class="coverage" id="cobertura" data-reveal>
+      <h3>¿Instaláis en mi municipio?</h3>
+      <ul>
+        {towns.map(([name, slug]) => (
+          <li><a href={'https://murciasolar.es/' + slug + '/'}>{name} <span aria-hidden="true">↗</span></a></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+<dialog class="project-dialog" id="project-dialog" aria-labelledby="project-dialog-label">
+  <div class="project-dialog-head">
+    <h2 id="project-dialog-label">Galería de Murcia Solar</h2>
+    <form method="dialog"><button class="project-close" aria-label="Cerrar galería" autofocus>×</button></form>
+  </div>
+  <img id="project-full" alt="" />
+  <div class="project-dialog-foot">
+    <div class="project-arrow-group">
+      <button type="button" data-gallery-step="-1" aria-label="Foto anterior">‹</button>
+      <button type="button" data-gallery-step="1" aria-label="Foto siguiente">›</button>
+    </div>
+    <p id="project-status" aria-live="polite"></p>
+  </div>
+</dialog>
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('#project-dialog')!;
+  const photo = document.querySelector<HTMLImageElement>('#project-full')!;
+  const status = document.querySelector<HTMLElement>('#project-status')!;
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-photo]'));
+  let current = 0;
+
+  function show(index: number) {
+    current = (index + links.length) % links.length;
+    const source = links[current].querySelector('img')!;
+    photo.src = source.currentSrc || source.src;
+    photo.alt = source.alt;
+    status.textContent = (current + 1) + ' / ' + links.length + ' · ' + source.alt;
+  }
+
+  links.forEach((link, index) => link.addEventListener('click', event => {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || typeof dialog.showModal !== 'function') return;
+    event.preventDefault();
+    show(index);
+    dialog.showModal();
+  }));
+
+  dialog.querySelectorAll<HTMLButtonElement>('[data-gallery-step]').forEach(button => {
+    button.addEventListener('click', () => show(current + Number(button.dataset.galleryStep)));
+  });
+  dialog.addEventListener('keydown', event => {
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      event.preventDefault();
+      show(current + (event.key === 'ArrowLeft' ? -1 : 1));
+    }
+  });
+  dialog.addEventListener('click', event => {
+    if (event.target === dialog) {
+      const rect = dialog.getBoundingClientRect();
+      if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.close();
+    }
+  });
+</script>
