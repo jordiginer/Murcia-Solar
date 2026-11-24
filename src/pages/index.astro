@@ -21,6 +21,7 @@ const steps = [
 ---
 <Site title="Murcia Solar | Placas solares e instalaciones en Murcia" description="Placas solares, cargadores eléctricos, climatización y electricista 24 h en la Región de Murcia.">
   <div class="scroll-progress" aria-hidden="true"></div>
+  <div class="site-cursor" aria-hidden="true"><span></span></div>
   <header id="inicio" class="site-header">
     <div class="wrap site-nav">
       <a class="brand" href="#inicio"><img src={base + 'home/logo-cabecera.webp'} alt="Murcia Solar" /></a>
@@ -39,7 +40,10 @@ const steps = [
       <div class="wrap editorial-cover">
         <div class="cover-title">
           <p class="eyebrow">Instaladores en la Región de Murcia</p>
-          <h1>El sol de Murcia,<br />en tu tejado.</h1>
+          <h1>
+            <span class="title-line"><span>El sol de Murcia,</span></span>
+            <span class="title-line"><span>en tu tejado.</span></span>
+          </h1>
         </div>
         <div class="cover-note">
           <p>Placas solares, cargadores eléctricos, climatización y electricista 24 h.</p>
@@ -47,7 +51,7 @@ const steps = [
           <a class="cover-phone" href="tel:+34635570836">635 570 836</a>
           <a class="cover-calculator" href={calculator}>Calculadora solar ↗</a>
         </div>
-        <figure class="editorial-photo">
+        <figure class="editorial-photo" data-parallax>
           <img src={base + 'panorama.webp'} alt="Paneles solares instalados sobre una cubierta en Murcia" fetchpriority="high" />
           <figcaption>Instalación solar en Murcia</figcaption>
         </figure>
@@ -83,9 +87,9 @@ const steps = [
 
     <section class="wrap block" id="proceso" aria-labelledby="steps-title">
       <h2 id="steps-title" data-reveal>Tu instalación en 4 pasos</h2>
-      <ol class="steps">
+      <ol class="steps" data-reveal>
         {steps.map(([title, detail], index) => (
-          <li data-reveal data-delay={index * 55}>
+          <li style={`--step-index: ${index}`}>
             <span class="step-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
             <div><h3>{title}</h3><p>{detail}</p></div>
           </li>
@@ -133,25 +137,7 @@ const steps = [
 </Site>
 
 <script>
-  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
-
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver(entries => {
-      for (const entry of entries) {
-        if (!entry.isIntersecting) continue;
-        observer.unobserve(entry.target);
-        if (reduceMotion.matches) continue;
-        const element = entry.target as HTMLElement;
-        element.animate(
-          [{ opacity: 0.35, transform: 'translateY(22px)' }, { opacity: 1, transform: 'translateY(0)' }],
-          { duration: 680, easing: 'cubic-bezier(.18,.7,.28,1)', delay: Number(element.dataset.delay ?? 0), fill: 'backwards' },
-        );
-      }
-    }, { threshold: 0.12 });
-    document.querySelectorAll('[data-reveal]').forEach(element => {
-      if (element.getBoundingClientRect().top >= innerHeight) observer.observe(element);
-    });
-  }
+  import '../scripts/motion';
 
   const subject = document.querySelector<HTMLSelectElement>('#service-subject');
   document.querySelectorAll<HTMLAnchorElement>('[data-service]').forEach(link => {
