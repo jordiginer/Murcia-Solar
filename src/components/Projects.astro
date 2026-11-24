@@ -46,13 +46,22 @@ const towns = [
     <h2 id="project-dialog-label">Galería de Murcia Solar</h2>
     <form method="dialog"><button class="project-close" aria-label="Cerrar galería" autofocus>×</button></form>
   </div>
-  <img id="project-full" alt="" />
+  <div class="project-stage">
+    <img id="project-full" alt="" draggable="false" />
+  </div>
   <div class="project-dialog-foot">
     <div class="project-arrow-group">
       <button type="button" data-gallery-step="-1" aria-label="Foto anterior">‹</button>
       <button type="button" data-gallery-step="1" aria-label="Foto siguiente">›</button>
     </div>
-    <p id="project-status" aria-live="polite"></p>
+    <p id="project-status" aria-live="polite" aria-atomic="true"></p>
+    <div class="project-thumbnails" role="group" aria-label="Elegir foto">
+      {photos.map((entry, index) => (
+        <button type="button" data-gallery-index={index} aria-label={entry.label} aria-current={index === 0 ? 'true' : undefined}>
+          <img src={base + entry.file} alt="" loading="lazy" decoding="async" />
+        </button>
+      ))}
+    </div>
   </div>
 </dialog>
 <script>
@@ -60,14 +69,32 @@ const towns = [
   const photo = document.querySelector<HTMLImageElement>('#project-full')!;
   const status = document.querySelector<HTMLElement>('#project-status')!;
   const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-photo]'));
+  const stage = dialog.querySelector<HTMLElement>('.project-stage')!;
+  const thumbnails = Array.from(dialog.querySelectorAll<HTMLButtonElement>('[data-gallery-index]'));
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   let current = 0;
+  let touchStart: Touch | undefined;
+  let slide: Animation | undefined;
 
-  function show(index: number) {
-    current = (index + links.length) % links.length;
+  function show(index: number, direction = 0) {
+    const next = (index + links.length) % links.length;
+    if (dialog.open && next === current) return;
+    current = next;
     const source = links[current].querySelector('img')!;
     photo.src = source.currentSrc || source.src;
     photo.alt = source.alt;
     status.textContent = (current + 1) + ' / ' + links.length + ' · ' + source.alt;
+    thumbnails.forEach((thumbnail, i) => {
+      if (i === current) thumbnail.setAttribute('aria-current', 'true');
+      else thumbnail.removeAttribute('aria-current');
+    });
+    slide?.cancel();
+    if (dialog.open && direction && !reducedMotion.matches) {
+      slide = photo.animate(
+        [{ transform: 'translateX(' + direction * 18 + 'px)' }, { transform: 'translateX(0)' }],
+        { duration: 280, easing: 'cubic-bezier(.18,.7,.28,1)' },
+      );
+    }
   }
 
   links.forEach((link, index) => link.addEventListener('click', event => {
@@ -77,13 +104,35 @@ const towns = [
     dialog.showModal();
   }));
 
+  function step(direction: number) {
+    show(current + direction, direction);
+  }
+
   dialog.querySelectorAll<HTMLButtonElement>('[data-gallery-step]').forEach(button => {
-    button.addEventListener('click', () => show(current + Number(button.dataset.galleryStep)));
+    button.addEventListener('click', () => step(Number(button.dataset.galleryStep)));
   });
+  thumbnails.forEach((button, index) => {
+    button.addEventListener('click', () => show(index, Math.sign(index - current)));
+  });
+  stage.addEventListener('touchstart', event => {
+    touchStart = event.touches.length === 1 ? event.touches[0] : undefined;
+  }, { passive: true });
+  stage.addEventListener('touchend', event => {
+    const touch = event.changedTouches[0];
+    if (touchStart && touch) {
+      const dx = touch.clientX - touchStart.clientX;
+      const dy = touch.clientY - touchStart.clientY;
+      if (Math.abs(dx) > 42 && Math.abs(dx) > Math.abs(dy) * 1.4) step(dx < 0 ? 1 : -1);
+    }
+    touchStart = undefined;
+  }, { passive: true });
+  stage.addEventListener('touchcancel', () => { touchStart = undefined; });
+  dialog.addEventListener('close', () => { slide?.cancel(); });
+  reducedMotion.addEventListener('change', () => { if (reducedMotion.matches) slide?.cancel(); });
   dialog.addEventListener('keydown', event => {
     if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
       event.preventDefault();
-      show(current + (event.key === 'ArrowLeft' ? -1 : 1));
+      step(event.key === 'ArrowLeft' ? -1 : 1);
     }
   });
   dialog.addEventListener('click', event => {

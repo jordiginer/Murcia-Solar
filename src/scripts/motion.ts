@@ -11,14 +11,7 @@ if ('IntersectionObserver' in window) {
       if (!entry.isIntersecting) continue;
       observer.unobserve(entry.target);
       if (reducedMotion.matches) continue;
-      const element = entry.target as HTMLElement;
-      element.classList.add('is-revealed');
-      if (element.matches('.steps')) continue;
-      const offset = element.matches('.service-card, .project-grid figure') ? 32 : 20;
-      element.animate(
-        [{ opacity: 0.15, transform: 'translateY(' + offset + 'px)' }, { opacity: 1, transform: 'translateY(0)' }],
-        { duration: 700, easing: 'cubic-bezier(.18,.7,.28,1)', delay: Number(element.dataset.delay ?? 0), fill: 'backwards' },
-      );
+      entry.target.classList.add('is-revealed');
     }
   }, { threshold: 0.12 });
 
@@ -112,7 +105,6 @@ precisePointer.addEventListener('change', resetCursor);
 reducedMotion.addEventListener('change', () => {
   resetCursor();
   if (reducedMotion.matches) {
-    document.querySelectorAll('[data-reveal]').forEach(element => element.getAnimations().forEach(animation => animation.cancel()));
     panorama?.style.removeProperty('--panorama-offset');
   } else {
     scheduleScroll();
