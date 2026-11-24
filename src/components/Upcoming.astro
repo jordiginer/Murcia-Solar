@@ -1,0 +1,44 @@
+<dialog class="upcoming-dialog" id="upcoming" aria-labelledby="upcoming-title" aria-describedby="upcoming-message">
+  <div class="upcoming-head">
+    <p class="eyebrow" id="upcoming-feature"></p>
+    <form method="dialog"><button aria-label="Cerrar ventana">×</button></form>
+  </div>
+  <h2 id="upcoming-title">Próximamente</h2>
+  <p id="upcoming-message">Esta función estará disponible más adelante.</p>
+  <form method="dialog"><button class="btn gold" autofocus>Volver a la web</button></form>
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('#upcoming')!;
+  const feature = document.querySelector<HTMLElement>('#upcoming-feature')!;
+  let trigger: HTMLElement | null = null;
+
+  function show(label: string, opener: HTMLElement | null) {
+    if (dialog.open) return;
+    trigger = opener;
+    feature.textContent = label;
+    dialog.showModal();
+  }
+
+  document.addEventListener('click', event => {
+    if (!(event.target instanceof Element)) return;
+    const control = event.target.closest<HTMLElement>('[data-upcoming]');
+    if (control?.dataset.upcoming) show(control.dataset.upcoming, control);
+  });
+  document.addEventListener('submit', event => {
+    const form = event.target;
+    if (!(form instanceof HTMLFormElement) || !form.dataset.upcomingForm) return;
+    event.preventDefault();
+    const opener = (event as SubmitEvent).submitter;
+    show(form.dataset.upcomingForm, opener instanceof HTMLElement ? opener : null);
+  });
+  dialog.addEventListener('click', event => {
+    if (event.target !== dialog) return;
+    const bounds = dialog.getBoundingClientRect();
+    if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) dialog.close();
+  });
+  dialog.addEventListener('close', () => {
+    trigger?.focus({ preventScroll: true });
+    trigger = null;
+  });
+</script>

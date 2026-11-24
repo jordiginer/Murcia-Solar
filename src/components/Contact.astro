@@ -1,12 +1,6 @@
 <div class="contact-form" id="formulario" data-reveal>
   <h3>Solicita presupuesto</h3>
-  <form action="https://murciasolar.es/#wpcf7-f1240-p6-o1" method="post" aria-label="Formulario de contacto">
-    <input type="hidden" name="_wpcf7" value="1240" />
-    <input type="hidden" name="_wpcf7_version" value="6.2.4.1" />
-    <input type="hidden" name="_wpcf7_locale" value="es_ES" />
-    <input type="hidden" name="_wpcf7_unit_tag" value="wpcf7-f1240-p6-o1" />
-    <input type="hidden" name="_wpcf7_container_post" value="6" />
-    <input type="hidden" name="_wpcf7_posted_data_hash" value="" />
+  <form method="dialog" novalidate data-upcoming-form="Solicitud de presupuesto" aria-label="Formulario de contacto">
     <label>Tu nombre<input name="your-name" autocomplete="name" maxlength="400" required /></label>
     <label>Tu correo electrónico<input type="email" name="your-email" autocomplete="email" maxlength="400" required /></label>
     <label>¿Qué servicio necesitas?
@@ -20,10 +14,11 @@
       </select>
     </label>
     <label>Cuéntanos más<textarea name="your-message" rows="2" maxlength="2000"></textarea></label>
-    <label class="consent">
-      <input type="checkbox" required />
-      <span>He leído la <a href="https://murciasolar.es/politica-privacidad/">política de privacidad</a>.</span>
-    </label>
+    <div class="consent">
+      <input id="privacy-consent" type="checkbox" required />
+      <div><label for="privacy-consent">He leído la política de privacidad.</label>
+      <button type="button" data-upcoming="Política de privacidad" aria-haspopup="dialog">Ver política de privacidad</button></div>
+    </div>
     <button class="btn gold" type="submit">Enviar solicitud ↗</button>
   </form>
 </div>

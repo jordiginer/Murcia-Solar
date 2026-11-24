@@ -2,22 +2,18 @@
 import Site from '../layouts/Site.astro';
 import Contact from '../components/Contact.astro';
 import Projects from '../components/Projects.astro';
+import PageDirectory from '../components/PageDirectory.astro';
+import Upcoming from '../components/Upcoming.astro';
+import home from '../data/home.json';
 
 const base = import.meta.env.BASE_URL + 'imagenes/';
-const whatsapp = 'https://wa.me/34635570836';
-const calculator = 'https://murciasolar.es/calculadora-ahorro-solar-murcia/';
 const services = [
   { title: 'Placas solares', image: 'placas.jpg', alt: 'Paneles fotovoltaicos sobre tejas', detail: 'Genera tu propia electricidad. Estudiamos tu consumo, dimensionamos la instalación y gestionamos los trámites.' },
   { title: 'Carga para coche eléctrico', image: 'cargador.jpg', alt: 'Coche eléctrico conectado a un punto de recarga', detail: 'Instalamos puntos de recarga en viviendas, garajes comunitarios y empresas.' },
   { title: 'Electricidad', image: 'electricidad.jpg', alt: 'Electricista revisando un cuadro eléctrico', detail: 'Instalaciones, reparaciones y asistencia eléctrica en Murcia.' },
   { title: 'Climatización', image: 'climatizacion.jpg', alt: 'Equipo de climatización en una vivienda', detail: 'Instalación de equipos adaptados a tu espacio y a tus necesidades.' },
 ];
-const steps = [
-  ['Cuéntanos qué necesitas', 'Revisamos tu consumo y tu espacio.'],
-  ['Recibe tu propuesta', 'Te explicamos el presupuesto y las opciones.'],
-  ['Instalamos el equipo', 'Coordinamos el montaje y la puesta en marcha.'],
-  ['Empieza a usarlo', 'Te orientamos sobre el funcionamiento.'],
-];
+
 ---
 <Site title="Murcia Solar | Placas solares e instalaciones en Murcia" description="Placas solares, cargadores eléctricos, climatización y electricista 24 h en la Región de Murcia.">
   <div class="scroll-progress" aria-hidden="true"></div>
@@ -29,7 +25,7 @@ const steps = [
         <a href="#soluciones">Servicios</a>
         <a href="#proceso">Cómo trabajamos</a>
         <a href="#contacto">Contacto</a>
-        <a href={calculator}>Calculadora solar ↗</a>
+        <button type="button" data-upcoming="Calculadora solar" aria-haspopup="dialog">Calculadora solar ↗</button>
         <a class="btn dark" href="#formulario">Pide presupuesto ↗</a>
       </nav>
       <a class="btn mobile-nav" href="#soluciones">Servicios ↓</a>
@@ -48,8 +44,8 @@ const steps = [
         <div class="cover-note">
           <p>Placas solares, cargadores eléctricos, climatización y electricista 24 h.</p>
           <a class="btn gold" href="#formulario">Pide tu estudio gratuito ↗</a>
-          <a class="cover-phone" href="tel:+34635570836">635 570 836</a>
-          <a class="cover-calculator" href={calculator}>Calculadora solar ↗</a>
+          <button class="cover-phone" type="button" data-upcoming="Llamar a Murcia Solar" aria-haspopup="dialog">635 570 836</button>
+          <button class="cover-calculator" type="button" data-upcoming="Calculadora solar" aria-haspopup="dialog">Calculadora solar ↗</button>
         </div>
         <figure class="editorial-photo" data-parallax>
           <img src={base + 'panorama.webp'} alt="Paneles solares instalados sobre una cubierta en Murcia" fetchpriority="high" />
@@ -64,7 +60,19 @@ const steps = [
       </div>
     </section>
 
-    <section class="wrap block" id="soluciones" aria-labelledby="services-title">
+    <section class="wrap block energy-needs" aria-labelledby="needs-title">
+      <div data-reveal>
+        <p class="eyebrow">Autoconsumo, movilidad y electricidad</p>
+        <h2 id="needs-title">Tres necesidades, un equipo en Murcia</h2>
+      </div>
+      <div class="needs-grid">
+        <article data-reveal><h3>Reduce tu factura</h3><p>Estudiamos tus consumos para dimensionar una instalación de autoconsumo que encaje con tu vivienda, comunidad o empresa.</p></article>
+        <article data-reveal><h3>Recarga en casa</h3><p>Instalamos puntos de recarga certificados Tesla y V2C y los integramos con tu instalación fotovoltaica.</p></article>
+        <article data-reveal><h3>Electricista de urgencia</h3><p>Atendemos averías, cortes de luz y problemas del cuadro eléctrico, también en festivos y fines de semana.</p></article>
+      </div>
+    </section>
+
+    <section class="wrap block services-section" id="soluciones" aria-labelledby="services-title">
       <div data-reveal>
         <h2 id="services-title">¿En qué te podemos ayudar?</h2>
         <p class="section-intro">Para viviendas, comunidades y empresas de toda Murcia.</p>
@@ -76,6 +84,9 @@ const steps = [
             <div class="service-copy">
               <h3>{service.title}</h3>
               <p>{service.detail}</p>
+              <ul class="service-points">
+                {(home.services.items[index]?.points ?? ['Climatización para viviendas y empresas', 'Aire acondicionado y aerotermia', 'Asesoramiento e instalación a medida']).map(point => <li>{point}</li>)}
+              </ul>
               <a href="#formulario" data-service={service.title}>Consultar instalación ↗</a>
             </div>
           </article>
@@ -85,16 +96,49 @@ const steps = [
 
     <Projects />
 
+    <section class="trust-section" aria-labelledby="trust-title">
+      <div class="wrap block trust-layout">
+        <div data-reveal>
+          <p class="eyebrow">Equipo y certificaciones</p>
+          <h2 id="trust-title">{home.trust.title}</h2>
+          <p>{home.trust.intro}</p>
+        </div>
+        <div>
+          <dl class="trust-stats" data-reveal>
+            {home.trust.items.slice(0, 3).map(item => <div><dt>{item.value}</dt><dd>{item.label}</dd></div>)}
+          </dl>
+          <div class="resource-links">
+            <button type="button" data-upcoming="Certificación Tesla Energy" aria-haspopup="dialog">Tesla Energy ↗</button>
+            <button type="button" data-upcoming="Certificación V2C" aria-haspopup="dialog">V2C Trydan ↗</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="wrap block" id="proceso" aria-labelledby="steps-title">
       <h2 id="steps-title" data-reveal>Tu instalación en 4 pasos</h2>
       <ol class="steps" data-reveal>
-        {steps.map(([title, detail], index) => (
+        {home.process.items.map((step, index) => (
           <li style={`--step-index: ${index}`}>
-            <span class="step-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-            <div><h3>{title}</h3><p>{detail}</p></div>
+            <span class="step-number" aria-hidden="true">{step.number}</span>
+            <div><h3>{step.title}</h3><p>{step.body}</p></div>
           </li>
         ))}
       </ol>
+    </section>
+
+    <section class="press-section" aria-labelledby="press-title">
+      <div class="wrap" data-reveal>
+        <h2 id="press-title">Hablan de Murcia Solar</h2>
+        <div class="press-media">
+          <button type="button" data-upcoming="Murcia Solar en Avatar Energía" aria-haspopup="dialog">
+            <img src={base + 'home/avatarenergia.webp'} alt="Avatar Energía" loading="lazy" />
+          </button>
+          <button type="button" data-upcoming="Murcia Solar en TikTok" aria-haspopup="dialog">
+            <img src={base + 'home/tiktok.webp'} alt="TikTok de Murcia Solar" loading="lazy" />
+          </button>
+        </div>
+      </div>
     </section>
 
     <section class="contact" id="contacto" aria-labelledby="contact-title">
@@ -102,8 +146,8 @@ const steps = [
         <div class="contact-copy" data-reveal>
           <h2 id="contact-title">Hablemos de<br />tu instalación.</h2>
           <p>Cuéntanos qué necesitas y te preparamos un presupuesto gratuito.</p>
-          <a class="btn gold" href={whatsapp}>Escríbenos por WhatsApp ↗</a>
-          <div class="contact-phone"><a href="tel:+34635570836">635 570 836</a><br />L–V 9–19 h · S 9–14 h</div>
+          <button class="btn gold" type="button" data-upcoming="WhatsApp" aria-haspopup="dialog">Escríbenos por WhatsApp ↗</button>
+          <div class="contact-phone"><button type="button" data-upcoming="Llamar a Murcia Solar" aria-haspopup="dialog">635 570 836</button><br />L–V 9–19 h · S 9–14 h</div>
         </div>
         <Contact />
       </div>
@@ -117,7 +161,7 @@ const steps = [
         </div>
         <div>
           <p class="price">70 € · IVA incluido</p>
-          <a class="btn dark" href="https://murciasolar.es/detector-fugas-dc-v2c-trydan-md0630t01a/">Consultar compra ↗</a>
+          <button class="btn dark" type="button" data-upcoming="Compra del detector de fugas V2C" aria-haspopup="dialog">Consultar compra ↗</button>
         </div>
       </div>
     </aside>
@@ -128,12 +172,17 @@ const steps = [
       <div>
         <a class="footer-brand" href="#inicio">Murcia Solar</a>
         <p>Energía solar, movilidad eléctrica y servicios eléctricos en la Región de Murcia.</p>
-        <a href="https://www.google.com/maps/search/?api=1&query=C.+de+la+Manga+11+30005+Murcia">C. de la Manga, 11 · 30005 Murcia ↗</a>
+        <button type="button" data-upcoming="Ubicación y mapa" aria-haspopup="dialog">C. de la Manga, 11 · 30005 Murcia ↗</button>
       </div>
-      <a class="footer-phone" href="tel:+34635570836">635 570 836 · Murcia</a>
+      <button type="button" class="footer-phone" data-upcoming="Llamar a Murcia Solar" aria-haspopup="dialog">635 570 836 · Murcia</button>
+      <details class="footer-directory">
+        <summary>Explorar el sitio</summary>
+        <PageDirectory />
+      </details>
       <small>© 2026 Murcia Solar Servicios Eléctricos SLU</small>
     </div>
   </footer>
+  <Upcoming />
 </Site>
 
 <script>

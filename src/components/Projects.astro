@@ -5,13 +5,7 @@ const photos = [
   { file: 'montaje.webp', label: 'Montaje de la estructura en cubierta' },
   { file: 'montepinar.jpg', label: 'Proyecto residencial en Montepinar' },
 ];
-const towns = [
-  ['Cartagena', 'placas-solares-en-cartagena'],
-  ['Lorca', 'placas-solares-lorca'],
-  ['San Javier', 'placas-solares-en-san-javier'],
-  ['Molina de Segura', 'placas-solares-molina-de-segura'],
-  ['Ver toda la cobertura', 'zona-de-cobertura'],
-];
+const towns = ['Cartagena', 'Lorca', 'San Javier', 'Molina de Segura', 'Ver toda la cobertura'];
 ---
 <section id="instalaciones" class="project-section" aria-labelledby="projects-title">
   <div class="wrap block">
@@ -34,8 +28,8 @@ const towns = [
     <div class="coverage" id="cobertura" data-reveal>
       <h3>¿Instaláis en mi municipio?</h3>
       <ul>
-        {towns.map(([name, slug]) => (
-          <li><a href={'https://murciasolar.es/' + slug + '/'}>{name} <span aria-hidden="true">↗</span></a></li>
+        {towns.map(name => (
+          <li><button type="button" data-upcoming={name} aria-haspopup="dialog">{name} <span aria-hidden="true">↗</span></button></li>
         ))}
       </ul>
     </div>
